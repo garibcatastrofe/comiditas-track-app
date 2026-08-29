@@ -2,13 +2,16 @@ import { StyleSheet, Text } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { View } from "@/components/Themed";
+import { TextApp } from "@/components/ui/TextApp";
+import { TextTitle } from "@/components/ui/TextTitle";
 
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tap #1</Text>
       <Text className="text-5xl text-blue-500 bg-red-500">Hola mundo</Text>
-      <Text></Text>
+      <TextTitle>Titulo</TextTitle>
+      <TextApp>Este es un texto normal</TextApp>
       <View
         style={styles.separator}
         lightColor="#eee"
