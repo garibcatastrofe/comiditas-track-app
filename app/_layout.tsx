@@ -1,4 +1,3 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -29,7 +28,6 @@ export default function RootLayout() {
     DMSans_500Medium: require("../assets/fonts/DMSans-Medium.ttf"),
     DMSans_700Bold: require("../assets/fonts/DMSans-Bold.ttf"),
     BebasNeue_400Regular: require("../assets/fonts/BebasNeue-Regular.ttf"),
-    ...FontAwesome.font,
   });
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -57,7 +55,6 @@ function RootNavigator() {
     <View style={{ backgroundColor: theme.background, flex: 1 }}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
       </Stack>
       <StatusBar style={mode === "dark" ? "light" : "dark"} />
     </View>
