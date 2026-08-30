@@ -1,30 +1,6 @@
-import { StyleSheet, View } from "react-native";
+/* COMPONENTS */
+import { Home } from "@/content/home/Home";
 
-import { TextApp } from "@/components/ui/TextApp";
-import { TextTitle } from "@/components/ui/TextTitle";
-
-export default function TabOneScreen() {
-  return (
-    <View style={styles.container}>
-      <TextTitle>titulo</TextTitle>
-      <TextApp>texto normal :d</TextApp>
-    </View>
-  );
+export default function IndexTab() {
+  return <Home />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});

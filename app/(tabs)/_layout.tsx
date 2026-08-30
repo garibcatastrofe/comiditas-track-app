@@ -2,7 +2,7 @@ import { Tabs } from "expo-router";
 import React from "react";
 
 /* THEME */
-import { HapticTab } from "@/components/ui/HapticTab";
+import { HapticTab } from "@/content/shared/ui/button/HapticTab";
 import { useTheme } from "@/theme/ThemeContext";
 import { ChartLine, House } from "lucide-react-native";
 
@@ -39,7 +39,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="stats"
         options={{
           title: "Tab Two",
           tabBarIcon: ({ color }) => <ChartLine size={24} color={color} />,
