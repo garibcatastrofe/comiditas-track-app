@@ -1,6 +1,5 @@
-/* COMPONENTS */
-import { Stats } from "@/content/stats/Stats";
+import { StatsContent } from "@/content/stats/StatsContent";
 
-export default function TabTwoScreen() {
-  return <Stats />;
+export default function StatsScreen() {
+  return <StatsContent />;
 }

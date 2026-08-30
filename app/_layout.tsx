@@ -55,6 +55,10 @@ function RootNavigator() {
     <View style={{ backgroundColor: theme.background, flex: 1 }}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="reports/[id]/report"
+          options={{ headerShown: false }}
+        />
       </Stack>
       <StatusBar style={mode === "dark" ? "light" : "dark"} />
     </View>

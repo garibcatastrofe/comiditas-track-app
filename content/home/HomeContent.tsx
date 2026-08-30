@@ -8,10 +8,15 @@ import { TextApp } from "@/content/shared/ui/text/TextApp";
 import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+/* NAVIGATION */
+import { useRouter } from "expo-router";
+
 /* THEME */
 import { useTheme } from "@/theme/ThemeContext";
 
-export function Home() {
+export function HomeContent() {
+  const router = useRouter();
+
   const { theme } = useTheme();
 
   const report: IReportPrimitive = {
@@ -32,7 +37,10 @@ export function Home() {
         contentContainerClassName="flex-col gap-4"
       >
         <Title text1="Hola" text2="Garib" />
-        <TextApp className="mx-6 mb-4 text-xl">
+        <TextApp
+          className="mx-6 mb-4 text-xl"
+          style={{ fontFamily: "DMSans_500Medium" }}
+        >
           ¿Cómo van tus comidas hoy?
         </TextApp>
         <Report
@@ -41,7 +49,12 @@ export function Home() {
           breakfast_status={report.breakfast_status}
           lunch_status={report.lunch_status}
           dinner_status={report.dinner_status}
-          twClassName=""
+          goAction={() =>
+            router.push({
+              pathname: "/reports/[id]/report",
+              params: { id: report.id ?? 0 },
+            })
+          }
         />
       </ScrollView>
     </SafeAreaView>

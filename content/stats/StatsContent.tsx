@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 /* THEME */
 import { useTheme } from "@/theme/ThemeContext";
 
-export function Stats() {
+export function StatsContent() {
   const { theme } = useTheme();
 
   return (

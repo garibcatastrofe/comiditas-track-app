@@ -20,15 +20,16 @@ export function Report({
   breakfast_status,
   lunch_status,
   dinner_status,
+  goAction,
   twClassName,
 }: IReportProps) {
   const { theme } = useTheme();
 
   return (
     <Pressable
-      className={`p-6 rounded-xl mx-6 gap-4 ${twClassName}`}
+      className={`p-6 rounded-xl mx-6 gap-4 ${twClassName && twClassName}`}
       style={{ backgroundColor: theme.surface }}
-      onPress={() => alert(id)}
+      onPress={goAction}
     >
       <TextApp className="text-xl" style={{ fontFamily: "DMSans_500Medium" }}>
         {formatDate(date)}
