@@ -96,7 +96,7 @@ export function ReportContent() {
 
       {report && (
         <Pressable
-          className="flex-row items-center justify-center gap-4 px-4 py-4 mx-6 mb-6 rounded-full"
+          className="flex-row items-center justify-center gap-4 p-4 mx-6 mb-6 rounded-full"
           style={{
             backgroundColor: updating ? theme.disabled_bg : theme.primary,
           }}
