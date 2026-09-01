@@ -45,13 +45,10 @@ export function HomeContent() {
 
   return (
     <SafeAreaView
-      className="flex-col justify-center flex-1"
+      className="justify-center flex-1"
       style={{ backgroundColor: theme.background }}
     >
-      <ScrollView
-        className="flex-1 py-6"
-        contentContainerClassName="flex-col gap-4"
-      >
+      <ScrollView className="flex-1 py-6" contentContainerClassName="gap-4">
         <Title text1="Hola" text2="Garib" />
         <TextApp
           className="mx-6 mb-4 text-xl"
