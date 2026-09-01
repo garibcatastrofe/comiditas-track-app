@@ -1,8 +1,8 @@
 /* COMPONENTS */
+import { Report } from "@/content/shared/components/report/Report";
 import { Title } from "@/content/shared/components/title/Title";
 import { TextApp } from "@/content/shared/ui/text/TextApp";
-import { Pressable, ScrollView, Text, View } from "react-native";
-import { PieChart } from "react-native-gifted-charts";
+import { FlatList, Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Graph } from "./components/graph/Graph";
 
@@ -12,10 +12,14 @@ import { useStats } from "./hooks/useStats";
 /* ICONS */
 import { Download, SlidersHorizontal } from "lucide-react-native";
 
+/* NAVIGATION */
+import { useRouter } from "expo-router";
+
 /* THEME */
 import { useTheme } from "@/theme/ThemeContext";
 
 export function StatsContent() {
+  const router = useRouter();
   const { theme } = useTheme();
   const { stats } = useStats();
 
@@ -61,150 +65,64 @@ export function StatsContent() {
             <TextApp>Cargando...</TextApp>
           </View>
         ) : (
-          <Graph
-            objExcelentReport={stats.objExcelentReport}
-            objRegularReport={stats.objRegularReport}
-            objTerribleReport={stats.objTerribleReport}
-            objEmptyReport={stats.objEmptyReport}
-            month={stats.month}
-            year={stats.year}
-          />
-        )}
+          <>
+            <Graph
+              objExcelentReport={stats.objExcelentReport}
+              objRegularReport={stats.objRegularReport}
+              objTerribleReport={stats.objTerribleReport}
+              objEmptyReport={stats.objEmptyReport}
+              month={stats.month}
+              year={stats.year}
+            />
 
-        <App />
+            <View className="flex-row gap-4 px-6">
+              <View
+                className="flex-1 p-6 rounded-xl"
+                style={{ backgroundColor: theme.card }}
+              >
+                <TextApp className="mb-2 text-xl" style={{ color: theme.ink }}>
+                  Registrados
+                </TextApp>
+                <TextApp>{stats.recordedDays}</TextApp>
+              </View>
+
+              <View
+                className="flex-1 p-6 rounded-xl"
+                style={{ backgroundColor: theme.card }}
+              >
+                <TextApp className="mb-2 text-xl" style={{ color: theme.ink }}>
+                  Sin registros
+                </TextApp>
+                <TextApp>{stats.notRecordedDays}</TextApp>
+              </View>
+            </View>
+
+            <FlatList
+              horizontal
+              data={stats.reports}
+              keyExtractor={(report) => report.id?.toString() ?? ""}
+              contentContainerClassName="gap-4 px-6 mb-12"
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <Report
+                  id={item.id}
+                  date={item.date}
+                  breakfastStatus={item.breakfastStatus}
+                  lunchStatus={item.lunchStatus}
+                  dinnerStatus={item.dinnerStatus}
+                  twClassName="w-80"
+                  goAction={() =>
+                    router.push({
+                      pathname: "/reports/[id]/report",
+                      params: { id: item.id ?? 0 },
+                    })
+                  }
+                />
+              )}
+            />
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
 }
-
-const App = () => {
-  const { theme } = useTheme();
-  const pieData = [
-    {
-      value: 47,
-      color: "#009FFF",
-      focused: true,
-    },
-    { value: 40, color: "#93FCF8" },
-    { value: 16, color: "#BDB2FA" },
-    { value: 3, color: "#FFA5BA" },
-  ];
-
-  const renderDot = (color: string) => {
-    return (
-      <View
-        style={{
-          height: 10,
-          width: 10,
-          borderRadius: 5,
-          backgroundColor: color,
-          marginRight: 10,
-        }}
-      />
-    );
-  };
-
-  const renderLegendComponent = () => {
-    return (
-      <>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            marginBottom: 10,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              width: 120,
-              marginRight: 20,
-            }}
-          >
-            {renderDot("#006DFF")}
-            <Text style={{ color: "white" }}>Excellent: 47%</Text>
-          </View>
-          <View
-            style={{ flexDirection: "row", alignItems: "center", width: 120 }}
-          >
-            {renderDot("#8F80F3")}
-            <Text style={{ color: "white" }}>Okay: 16%</Text>
-          </View>
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              width: 120,
-              marginRight: 20,
-            }}
-          >
-            {renderDot("#3BE9DE")}
-            <Text style={{ color: "white" }}>Good: 40%</Text>
-          </View>
-          <View
-            style={{ flexDirection: "row", alignItems: "center", width: 120 }}
-          >
-            {renderDot("#FF7F97")}
-            <Text style={{ color: "white" }}>Poor: 3%</Text>
-          </View>
-        </View>
-      </>
-    );
-  };
-
-  return (
-    <View
-      style={{
-        paddingVertical: 100,
-        backgroundColor: "#34448B",
-        flex: 1,
-      }}
-    >
-      <View
-        style={{
-          margin: 20,
-          padding: 16,
-          borderRadius: 20,
-          backgroundColor: "#232B5D",
-        }}
-      >
-        <TextApp
-          className="mb-4 text-xl"
-          style={{ fontFamily: "DMSans_700Bold", color: theme.ink }}
-        >
-          Reportes
-        </TextApp>
-        <View className="items-center p-4 bg-red-500">
-          <PieChart
-            data={pieData}
-            donut
-            showGradient
-            radius={100}
-            innerRadius={70}
-            innerCircleColor={"#232B5D"}
-            centerLabelComponent={() => {
-              return (
-                <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
-                >
-                  <Text
-                    style={{ fontSize: 22, color: "white", fontWeight: "bold" }}
-                  >
-                    47%
-                  </Text>
-                  <Text style={{ fontSize: 14, color: "white" }}>
-                    Excellent
-                  </Text>
-                </View>
-              );
-            }}
-          />
-        </View>
-        {renderLegendComponent()}
-      </View>
-    </View>
-  );
-};

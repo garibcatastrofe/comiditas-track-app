@@ -27,11 +27,11 @@ export function Report({
 
   return (
     <Pressable
-      className={`p-6 rounded-xl mx-6 gap-4 ${twClassName && twClassName}`}
-      style={{ backgroundColor: theme.surface }}
+      className={`p-6 rounded-xl gap-4 ${twClassName && twClassName}`}
+      style={{ backgroundColor: theme.card }}
       onPress={goAction}
     >
-      <TextApp className="text-xl" style={{ fontFamily: "DMSans_500Medium" }}>
+      <TextApp className="text-xl" style={{ color: theme.ink }}>
         {formatDate(date)}
       </TextApp>
       <View className="gap-4">

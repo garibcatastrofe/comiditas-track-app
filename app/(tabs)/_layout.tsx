@@ -19,7 +19,7 @@ export default function TabLayout() {
         tabBarLabelVisibilityMode: "unlabeled",
         animation: "none",
         tabBarStyle: {
-          backgroundColor: theme.card,
+          backgroundColor: theme.primary_bg,
           borderTopWidth: 0,
           elevation: 0,
           shadowOpacity: 0,

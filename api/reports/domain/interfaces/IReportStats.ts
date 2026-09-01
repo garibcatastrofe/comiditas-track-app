@@ -5,8 +5,8 @@ export interface IReportStats {
   objRegularReport: ReportCount;
   objTerribleReport: ReportCount;
   objEmptyReport: ReportCount;
-  recordedDays: number;
-  notRecordedDays: number;
+  recordedDays: string;
+  notRecordedDays: string;
   month: string;
   year: string;
   reports: IReportPrimitive[];

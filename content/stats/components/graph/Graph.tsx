@@ -70,8 +70,8 @@ export function Graph({
             return (
               <View className="items-center justify-center">
                 <TextApp
-                  style={{ fontFamily: "DMSans_700Bold" }}
-                  className="text-xl"
+                  style={{ fontFamily: "DMSans_700Bold", color: theme.ink }}
+                  className="text-2xl"
                 >
                   {month}
                 </TextApp>

@@ -5,7 +5,7 @@ import { IReportPrimitive } from "@/api/reports/domain/interfaces/IReportPrimiti
 import { Report } from "@/content/shared/components/report/Report";
 import { Title } from "@/content/shared/components/title/Title";
 import { TextApp } from "@/content/shared/ui/text/TextApp";
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 /* NAVIGATION */
@@ -43,19 +43,21 @@ export function HomeContent() {
         >
           ¿Cómo van tus comidas hoy?
         </TextApp>
-        <Report
-          id={report.id}
-          date={report.date}
-          breakfastStatus={report.breakfastStatus}
-          lunchStatus={report.lunchStatus}
-          dinnerStatus={report.dinnerStatus}
-          goAction={() =>
-            router.push({
-              pathname: "/reports/[id]/report",
-              params: { id: report.id ?? 0 },
-            })
-          }
-        />
+        <View className="mx-6">
+          <Report
+            id={report.id}
+            date={report.date}
+            breakfastStatus={report.breakfastStatus}
+            lunchStatus={report.lunchStatus}
+            dinnerStatus={report.dinnerStatus}
+            goAction={() =>
+              router.push({
+                pathname: "/reports/[id]/report",
+                params: { id: report.id ?? 0 },
+              })
+            }
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

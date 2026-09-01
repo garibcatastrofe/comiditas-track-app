@@ -27,7 +27,6 @@ import { useTheme } from "@/theme/ThemeContext";
 
 /* UTILS */
 import { formatDate } from "@/content/shared/utils/formatDate";
-import { useEffect } from "react";
 
 export function ReportContent() {
   const router = useRouter();
@@ -35,10 +34,6 @@ export function ReportContent() {
 
   const { theme } = useTheme();
   const { report, changeMealStatus, updateReport, updating } = useReport(id);
-
-  useEffect(() => {
-    console.log(report);
-  }, [report]);
 
   return (
     <SafeAreaView
