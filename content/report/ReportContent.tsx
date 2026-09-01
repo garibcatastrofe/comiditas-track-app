@@ -30,10 +30,10 @@ import { formatDate } from "@/content/shared/utils/formatDate";
 
 export function ReportContent() {
   const router = useRouter();
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { date } = useLocalSearchParams<{ date: string }>();
 
   const { theme } = useTheme();
-  const { report, changeMealStatus, updateReport, updating } = useReport(id);
+  const { report, changeMealStatus, updateReport, updating } = useReport(date);
 
   return (
     <SafeAreaView

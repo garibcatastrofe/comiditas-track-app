@@ -65,7 +65,7 @@ export function HomeContent() {
             dinnerStatus={report.dinnerStatus}
             goAction={() =>
               router.push({
-                pathname: "/reports/[id]/report",
+                pathname: "/reports/[date]/report",
                 params: { id: report.id ?? 0 },
               })
             }

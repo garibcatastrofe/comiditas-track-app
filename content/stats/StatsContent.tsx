@@ -113,7 +113,7 @@ export function StatsContent() {
                   twClassName="w-80"
                   goAction={() =>
                     router.push({
-                      pathname: "/reports/[id]/report",
+                      pathname: "/reports/[date]/report",
                       params: { id: item.id ?? 0 },
                     })
                   }

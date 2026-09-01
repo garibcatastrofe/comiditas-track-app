@@ -75,7 +75,7 @@ function RootNavigator() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
-          name="reports/[id]/report"
+          name="reports/[date]/report"
           options={{ headerShown: false }}
         />
       </Stack>
