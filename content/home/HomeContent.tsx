@@ -1,5 +1,5 @@
 /* API */
-import { IReportPrimitive } from "@/api/reports/domain/interfaces/IReportPrimitive";
+import { IReportPrimitive } from "@/src/reports/domain/interfaces/IReportPrimitive";
 
 /* COMPONENTS */
 import { Report } from "@/content/shared/components/report/Report";

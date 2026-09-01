@@ -1,5 +1,5 @@
 /* API */
-import { IReportPrimitive } from "@/api/reports/domain/interfaces/IReportPrimitive";
+import { IReportPrimitive } from "@/src/reports/domain/interfaces/IReportPrimitive";
 
 /* HOOKS */
 import { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ export function useReport(id: string) {
   const changeMealStatus = (status: string, meal: string) => {
     if (!report) return;
 
-    if (meal === "desayuno") {
+    if (meal === "breakfast") {
       if (status === "excelent")
         return setReport({ ...report, breakfastStatus: "excelent" });
       if (status === "regular")
@@ -22,7 +22,7 @@ export function useReport(id: string) {
       return setReport({ ...report, breakfastStatus: "empty" });
     }
 
-    if (meal === "comida") {
+    if (meal === "lunch") {
       if (status === "excelent")
         return setReport({ ...report, lunchStatus: "excelent" });
       if (status === "regular")
@@ -33,7 +33,7 @@ export function useReport(id: string) {
       return setReport({ ...report, lunchStatus: "empty" });
     }
 
-    if (meal === "cena") {
+    if (meal === "dinner") {
       if (status === "excelent")
         return setReport({ ...report, dinnerStatus: "excelent" });
       if (status === "regular")

@@ -1,5 +1,5 @@
 /* API */
-import { IReportStats } from "@/api/reports/domain/interfaces/IReportStats";
+import { IReportStats } from "@/src/reports/domain/interfaces/IReportStats";
 
 /* HOOKS */
 import { useEffect, useState } from "react";

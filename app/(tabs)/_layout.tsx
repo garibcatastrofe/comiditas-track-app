@@ -1,10 +1,8 @@
-import { Tabs } from "expo-router";
-import React from "react";
-
-/* THEME */
 import { HapticTab } from "@/content/shared/ui/button/HapticTab";
 import { useTheme } from "@/theme/ThemeContext";
+import { Tabs } from "expo-router";
 import { ChartLine, House } from "lucide-react-native";
+import React from "react";
 
 export default function TabLayout() {
   const { theme } = useTheme();

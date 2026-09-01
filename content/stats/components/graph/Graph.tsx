@@ -1,5 +1,5 @@
 /* API */
-import { IReportStats } from "@/api/reports/domain/interfaces/IReportStats";
+import { IReportStats } from "@/src/reports/domain/interfaces/IReportStats";
 
 /* COMPONENTS */
 import { TextApp } from "@/content/shared/ui/text/TextApp";
