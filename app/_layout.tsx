@@ -1,13 +1,15 @@
+import { db } from "@/src/db/drizzleSQLiteService";
+import { ThemeProvider, useTheme } from "@/theme/ThemeContext";
+import { migrate } from "drizzle-orm/expo-sqlite/migrator";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import "react-native-reanimated";
-import "../global.css";
-
-import { ThemeProvider, useTheme } from "@/theme/ThemeContext";
 import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
+import "react-native-reanimated";
+import migrations from "../drizzle/migrations";
+import "../global.css";
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary
@@ -50,6 +52,23 @@ export default function RootLayout() {
 
 function RootNavigator() {
   const { mode, theme } = useTheme();
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    try {
+      const migrateDb = async () => {
+        await migrate(db, migrations).then(() => setReady(true));
+      };
+
+      migrateDb();
+    } catch (e) {
+      console.log("Error: " + e);
+    }
+  }, []);
+
+  if (!ready) {
+    return null;
+  }
 
   return (
     <View style={{ backgroundColor: theme.background, flex: 1 }}>

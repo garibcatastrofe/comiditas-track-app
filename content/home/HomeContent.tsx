@@ -12,7 +12,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 
 /* THEME */
+import { db } from "@/src/db/drizzleSQLiteService";
+import { reports } from "@/src/db/schemas/reports";
 import { useTheme } from "@/theme/ThemeContext";
+import { useEffect } from "react";
 
 export function HomeContent() {
   const router = useRouter();
@@ -26,6 +29,19 @@ export function HomeContent() {
     lunchStatus: "regular",
     dinnerStatus: "terrible",
   };
+
+  useEffect(() => {
+    try {
+      const getReports = async () => {
+        const reportsData = await db.select().from(reports);
+        console.log(reportsData);
+      };
+
+      getReports();
+    } catch (error) {
+      console.log("Error desde home: " + error);
+    }
+  }, []);
 
   return (
     <SafeAreaView
