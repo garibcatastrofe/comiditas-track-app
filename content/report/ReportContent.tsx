@@ -74,20 +74,20 @@ export function ReportContent() {
 
             <MealStatusSelector
               label="Desayuno"
-              meal="desayuno"
-              status={report.breakfast_status}
+              meal="breakfast"
+              status={report.breakfastStatus}
               changeMealStatus={changeMealStatus}
             />
             <MealStatusSelector
               label="Comida"
-              meal="comida"
-              status={report.lunch_status}
+              meal="lunch"
+              status={report.lunchStatus}
               changeMealStatus={changeMealStatus}
             />
             <MealStatusSelector
               label="Cena"
-              meal="cena"
-              status={report.dinner_status}
+              meal="dinner"
+              status={report.dinnerStatus}
               changeMealStatus={changeMealStatus}
             />
           </View>
@@ -143,13 +143,13 @@ function MealStatusSelector({
           className="items-center justify-center flex-1 p-4 rounded-full"
           style={{
             backgroundColor:
-              status === "excelente" ? theme.success_bg : theme.surface,
+              status === "excelent" ? theme.success_bg : theme.surface,
           }}
-          onPress={() => changeMealStatus("excelente", meal)}
+          onPress={() => changeMealStatus("excelent", meal)}
         >
           <Check
             size={20}
-            color={status === "excelente" ? theme.success : theme.muted}
+            color={status === "excelent" ? theme.success : theme.muted}
           />
         </Pressable>
 
@@ -184,13 +184,13 @@ function MealStatusSelector({
         <Pressable
           className="items-center justify-center flex-1 p-4 rounded-full"
           style={{
-            backgroundColor: status === "vacio" ? theme.info_bg : theme.surface,
+            backgroundColor: status === "empty" ? theme.info_bg : theme.surface,
           }}
-          onPress={() => changeMealStatus("vacio", meal)}
+          onPress={() => changeMealStatus("empty", meal)}
         >
           <CircleQuestionMark
             size={20}
-            color={status === "vacio" ? theme.info : theme.muted}
+            color={status === "empty" ? theme.info : theme.muted}
           />
         </Pressable>
       </View>

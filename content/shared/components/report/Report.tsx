@@ -17,9 +17,9 @@ import { formatDate } from "@/content/shared/utils/formatDate";
 export function Report({
   id,
   date,
-  breakfast_status,
-  lunch_status,
-  dinner_status,
+  breakfastStatus,
+  lunchStatus,
+  dinnerStatus,
   goAction,
   twClassName,
 }: IReportProps) {
@@ -37,17 +37,17 @@ export function Report({
       <View className="gap-4">
         <View className="flex-row items-center justify-between gap-4">
           <TextApp className="text-lg">Desayuno</TextApp>
-          <ReportStatusTag status={breakfast_status} />
+          <ReportStatusTag status={breakfastStatus} />
         </View>
 
         <View className="flex-row items-center justify-between gap-4">
           <TextApp className="text-lg">Comida</TextApp>
-          <ReportStatusTag status={lunch_status} />
+          <ReportStatusTag status={lunchStatus} />
         </View>
 
         <View className="flex-row items-center justify-between gap-4">
           <TextApp className="text-lg">Cena</TextApp>
-          <ReportStatusTag status={dinner_status} />
+          <ReportStatusTag status={dinnerStatus} />
         </View>
       </View>
     </Pressable>
@@ -58,29 +58,28 @@ function ReportStatusTag({ status }: { status: string }) {
   const { theme } = useTheme();
 
   const getBackgroundColor = (status: string) => {
-    if (status === "excelente") return theme.success_bg;
+    if (status === "excelent") return theme.success_bg;
     if (status === "regular") return theme.warn_bg;
     if (status === "terrible") return theme.danger_bg;
     return theme.info_bg;
   };
 
   const getTintColor = (status: string) => {
-    if (status === "excelente") return theme.success;
+    if (status === "excelent") return theme.success;
     if (status === "regular") return theme.warn;
     if (status === "terrible") return theme.danger;
     return theme.info;
   };
 
   const getLabel = (status: string) => {
-    if (status === "excelente") return "Excelente";
+    if (status === "excelent") return "Excelente";
     if (status === "regular") return "Regular";
     if (status === "terrible") return "Terrible";
     return "Vacío";
   };
 
   const Icon = () => {
-    if (status === "excelente")
-      return <Check size={20} color={theme.success} />;
+    if (status === "excelent") return <Check size={20} color={theme.success} />;
     if (status === "regular") return <Minus size={20} color={theme.warn} />;
     if (status === "terrible") return <X size={20} color={theme.danger} />;
     return <CircleQuestionMark size={20} color={theme.info} />;

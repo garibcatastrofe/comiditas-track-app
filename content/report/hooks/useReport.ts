@@ -12,36 +12,36 @@ export function useReport(id: string) {
     if (!report) return;
 
     if (meal === "desayuno") {
-      if (status === "excelente")
-        return setReport({ ...report, breakfast_status: "excelente" });
+      if (status === "excelent")
+        return setReport({ ...report, breakfastStatus: "excelent" });
       if (status === "regular")
-        return setReport({ ...report, breakfast_status: "regular" });
+        return setReport({ ...report, breakfastStatus: "regular" });
       if (status === "terrible")
-        return setReport({ ...report, breakfast_status: "terrible" });
+        return setReport({ ...report, breakfastStatus: "terrible" });
 
-      return setReport({ ...report, breakfast_status: "vacio" });
+      return setReport({ ...report, breakfastStatus: "empty" });
     }
 
     if (meal === "comida") {
-      if (status === "excelente")
-        return setReport({ ...report, lunch_status: "excelente" });
+      if (status === "excelent")
+        return setReport({ ...report, lunchStatus: "excelent" });
       if (status === "regular")
-        return setReport({ ...report, lunch_status: "regular" });
+        return setReport({ ...report, lunchStatus: "regular" });
       if (status === "terrible")
-        return setReport({ ...report, lunch_status: "terrible" });
+        return setReport({ ...report, lunchStatus: "terrible" });
 
-      return setReport({ ...report, lunch_status: "vacio" });
+      return setReport({ ...report, lunchStatus: "empty" });
     }
 
     if (meal === "cena") {
-      if (status === "excelente")
-        return setReport({ ...report, dinner_status: "excelente" });
+      if (status === "excelent")
+        return setReport({ ...report, dinnerStatus: "excelent" });
       if (status === "regular")
-        return setReport({ ...report, dinner_status: "regular" });
+        return setReport({ ...report, dinnerStatus: "regular" });
       if (status === "terrible")
-        return setReport({ ...report, dinner_status: "terrible" });
+        return setReport({ ...report, dinnerStatus: "terrible" });
 
-      return setReport({ ...report, dinner_status: "vacio" });
+      return setReport({ ...report, dinnerStatus: "empty" });
     }
   };
 
@@ -49,9 +49,9 @@ export function useReport(id: string) {
     const timeout = setTimeout(() => {
       setReport({
         id: Number(id),
-        breakfast_status: "excelente",
-        lunch_status: "regular",
-        dinner_status: "terrible",
+        breakfastStatus: "excelent",
+        lunchStatus: "regular",
+        dinnerStatus: "terrible",
         date: "2026-08-27",
       });
     }, 3000);

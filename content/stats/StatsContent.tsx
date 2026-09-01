@@ -4,6 +4,10 @@ import { TextApp } from "@/content/shared/ui/text/TextApp";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Graph } from "./components/graph/Graph";
+
+/* HOOKS */
+import { useStats } from "./hooks/useStats";
 
 /* ICONS */
 import { Download, SlidersHorizontal } from "lucide-react-native";
@@ -13,13 +17,7 @@ import { useTheme } from "@/theme/ThemeContext";
 
 export function StatsContent() {
   const { theme } = useTheme();
-
-  const data = [
-    { value: 40, color: "#4CAF50" },
-    { value: 30, color: "#FFC107" },
-    { value: 20, color: "#F44336" },
-    { value: 10, color: "#9E9E9E" },
-  ];
+  const { stats } = useStats();
 
   return (
     <SafeAreaView
@@ -33,31 +31,50 @@ export function StatsContent() {
           <View className="flex-row gap-4 px-6">
             <Pressable
               className="items-center justify-center flex-1 p-4 rounded-full"
-              style={{ backgroundColor: theme.primary }}
+              style={{
+                backgroundColor: stats ? theme.primary : theme.disabled_bg,
+              }}
+              onPress={stats ? () => {} : undefined}
             >
-              <SlidersHorizontal size={20} color={theme.primary_txt} />
+              <SlidersHorizontal
+                size={20}
+                color={stats ? theme.primary_txt : theme.disabled}
+              />
             </Pressable>
             <Pressable
               className="items-center justify-center flex-1 p-4 rounded-full"
-              style={{ backgroundColor: theme.primary }}
+              style={{
+                backgroundColor: stats ? theme.primary : theme.disabled_bg,
+              }}
+              onPress={stats ? () => {} : undefined}
             >
-              <Download size={20} color={theme.primary_txt} />
+              <Download
+                size={20}
+                color={stats ? theme.primary_txt : theme.disabled}
+              />
             </Pressable>
           </View>
         </View>
 
-        <View className="bg-neutral-800">
-          <PieChart data={data} radius={100} />
+        {!stats ? (
+          <View className="px-6">
+            <TextApp>Cargando...</TextApp>
+          </View>
+        ) : (
+          <Graph
+            objExcelentReport={stats.objExcelentReport}
+            objRegularReport={stats.objRegularReport}
+            objTerribleReport={stats.objTerribleReport}
+            objEmptyReport={stats.objEmptyReport}
+            month={stats.month}
+            year={stats.year}
+          />
+        )}
 
-          <App />
-        </View>
+        <App />
       </ScrollView>
     </SafeAreaView>
   );
-}
-
-function Graph({}: {}) {
-  return <View></View>;
 }
 
 const App = () => {

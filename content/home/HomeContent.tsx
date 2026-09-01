@@ -22,9 +22,9 @@ export function HomeContent() {
   const report: IReportPrimitive = {
     id: 1,
     date: "2026-08-27",
-    breakfast_status: "excelente",
-    lunch_status: "regular",
-    dinner_status: "terrible",
+    breakfastStatus: "excelent",
+    lunchStatus: "regular",
+    dinnerStatus: "terrible",
   };
 
   return (
@@ -46,9 +46,9 @@ export function HomeContent() {
         <Report
           id={report.id}
           date={report.date}
-          breakfast_status={report.breakfast_status}
-          lunch_status={report.lunch_status}
-          dinner_status={report.dinner_status}
+          breakfastStatus={report.breakfastStatus}
+          lunchStatus={report.lunchStatus}
+          dinnerStatus={report.dinnerStatus}
           goAction={() =>
             router.push({
               pathname: "/reports/[id]/report",
