@@ -1,9 +1,10 @@
 /* API */
 import { IReportPrimitive } from "@/src/reports/domain/interfaces/IReportPrimitive";
 import { ClsReportController } from "@/src/reports/infrastructure/ClsReportController";
+import { useFocusEffect } from "expo-router";
 
 /* HOOKS */
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 export function useReport(date: string) {
   const [report, setReport] = useState<IReportPrimitive | null>(null);
@@ -48,29 +49,47 @@ export function useReport(date: string) {
     }
   };
 
-  useEffect(() => {
-    const fetchReport = async () => {
-      const response = await ClsReportController.selectReportByDate({ date });
+  const fetchReport = useCallback(async () => {
+    setLoading(true);
+    setError(false);
 
-      if (response.ok) {
-        setReport(response.report);
-        setLoading(false);
-      }
-    };
-  }, [loading]);
+    const response = await ClsReportController.selectReportByDate({ date });
+
+    if (response.ok) {
+      setReport(response.report);
+    } else {
+      setError(true);
+    }
+
+    setLoading(false);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchReport();
+    }, [fetchReport]),
+  );
 
   const updateReport = async () => {
-    try {
-      setUpdating(true);
-      setTimeout(() => {
-        console.log("Reporte guardado/actualizado correctamente");
-        console.log(report);
-        setUpdating(false);
-      }, 3000);
-    } catch {
-      setUpdating(false);
+    setUpdating(true);
+
+    if (report) {
+      const response = await ClsReportController.updateReport({
+        date: report.date,
+        report,
+      });
+
+      console.log(response.message);
     }
+
+    setUpdating(false);
   };
 
-  return { report, changeMealStatus, updating, updateReport };
+  return {
+    report,
+    changeMealStatus,
+    updating,
+    updateReport,
+    retry: fetchReport,
+  };
 }
