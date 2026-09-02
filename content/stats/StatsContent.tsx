@@ -1,6 +1,7 @@
 /* COMPONENTS */
 import { Report } from "@/content/shared/components/report/Report";
 import { Title } from "@/content/shared/components/title/Title";
+import { TryAgainContent } from "@/content/shared/components/tryAgainContent/TryAgainContent";
 import { TextApp } from "@/content/shared/ui/text/TextApp";
 import { FlatList, Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -21,7 +22,7 @@ import { useTheme } from "@/theme/ThemeContext";
 export function StatsContent() {
   const router = useRouter();
   const { theme } = useTheme();
-  const { stats } = useStats();
+  const { stats, error, loading, setDate, retry } = useStats();
 
   return (
     <SafeAreaView
@@ -31,41 +32,43 @@ export function StatsContent() {
       <ScrollView className="py-6" contentContainerClassName="gap-4">
         <Title text1="Mis" text2="estadísticas" />
 
-        <View>
-          <View className="flex-row gap-4 px-6">
-            <Pressable
-              className="items-center justify-center flex-1 p-4 rounded-full"
-              style={{
-                backgroundColor: stats ? theme.primary : theme.disabled_bg,
-              }}
-              onPress={stats ? () => {} : undefined}
-            >
-              <SlidersHorizontal
-                size={20}
-                color={stats ? theme.primary_txt : theme.disabled}
-              />
-            </Pressable>
-            <Pressable
-              className="items-center justify-center flex-1 p-4 rounded-full"
-              style={{
-                backgroundColor: stats ? theme.primary : theme.disabled_bg,
-              }}
-              onPress={stats ? () => {} : undefined}
-            >
-              <Download
-                size={20}
-                color={stats ? theme.primary_txt : theme.disabled}
-              />
-            </Pressable>
-          </View>
-        </View>
-
-        {!stats ? (
-          <View className="px-6">
+        {loading ? (
+          <View className="mx-6">
             <TextApp>Cargando...</TextApp>
           </View>
+        ) : error ? (
+          <TryAgainContent
+            action={retry}
+            label="Ocurrió un error al obtener las estadísticas"
+          />
+        ) : !stats ? (
+          <TryAgainContent
+            action={retry}
+            label="Las estadísticas llegarón vacías"
+          />
         ) : (
-          <>
+          <View className="gap-4">
+            <View className="flex-row gap-4 px-6">
+              <Pressable
+                className="items-center justify-center flex-1 p-4 rounded-full"
+                style={{
+                  backgroundColor: theme.primary,
+                }}
+                onPress={() => {}}
+              >
+                <SlidersHorizontal size={20} color={theme.primary_txt} />
+              </Pressable>
+              <Pressable
+                className="items-center justify-center flex-1 p-4 rounded-full"
+                style={{
+                  backgroundColor: theme.primary,
+                }}
+                onPress={() => {}}
+              >
+                <Download size={20} color={theme.primary_txt} />
+              </Pressable>
+            </View>
+
             <Graph
               objExcelentReport={stats.objExcelentReport}
               objRegularReport={stats.objRegularReport}
@@ -100,7 +103,7 @@ export function StatsContent() {
             <FlatList
               horizontal
               data={stats.reports}
-              keyExtractor={(report) => report.id?.toString() ?? ""}
+              keyExtractor={(report) => report.date}
               contentContainerClassName="gap-4 px-6 mb-12"
               showsHorizontalScrollIndicator={false}
               renderItem={({ item }) => (
@@ -110,6 +113,7 @@ export function StatsContent() {
                   breakfastStatus={item.breakfastStatus}
                   lunchStatus={item.lunchStatus}
                   dinnerStatus={item.dinnerStatus}
+                  exist={item.exist}
                   twClassName="w-80"
                   goAction={() =>
                     router.push({
@@ -120,7 +124,7 @@ export function StatsContent() {
                 />
               )}
             />
-          </>
+          </View>
         )}
       </ScrollView>
     </SafeAreaView>

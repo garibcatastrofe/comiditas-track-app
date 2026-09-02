@@ -18,7 +18,7 @@ export function TryAgainContent({
   const { theme } = useTheme();
 
   return (
-    <View className="gap-4">
+    <View className="gap-4 mx-6">
       <TextApp>{label}</TextApp>
       <Pressable
         onPress={action}

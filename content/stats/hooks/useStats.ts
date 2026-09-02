@@ -1,51 +1,42 @@
 /* API */
 import { IReportStats } from "@/src/reports/domain/interfaces/IReportStats";
+import { ClsReportController } from "@/src/reports/infrastructure/ClsReportController";
 
 /* HOOKS */
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
+
+/* UTILS */
+import { getMonthYear } from "@/content/shared/utils/formatDate";
 
 export function useStats() {
   const [stats, setStats] = useState<IReportStats | null>(null);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [date, setDate] = useState<{ month: number; year: number }>(
+    getMonthYear(),
+  );
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setStats({
-        objExcelentReport: { count: 32, focused: true },
-        objRegularReport: { count: 30, focused: false },
-        objTerribleReport: { count: 7, focused: false },
-        objEmptyReport: { count: 3, focused: false },
-        recordedDays: "18 de 31",
-        notRecordedDays: "13",
-        month: "Agosto",
-        year: "2026",
-        reports: [
-          {
-            id: 1,
-            breakfastStatus: "excelent",
-            lunchStatus: "regular",
-            dinnerStatus: "terrible",
-            date: "2026-08-27",
-          },
-          {
-            id: 2,
-            breakfastStatus: "regular",
-            lunchStatus: "regular",
-            dinnerStatus: "regular",
-            date: "2026-08-26",
-          },
-          {
-            id: 3,
-            breakfastStatus: "empty",
-            lunchStatus: "empty",
-            dinnerStatus: "empty",
-            date: "2026-08-25",
-          },
-        ],
-      });
-    }, 3000);
+  const fetchStats = useCallback(async () => {
+    setLoading(true);
+    setError(false);
 
-    return () => clearTimeout(timeout);
-  }, []);
+    const response = await ClsReportController.selectReportStats(date);
 
-  return { stats, setStats };
+    if (response.ok) {
+      setStats(response.stats);
+    } else {
+      setError(true);
+    }
+
+    setLoading(false);
+  }, [date]);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchStats();
+    }, [fetchStats]),
+  );
+
+  return { stats, loading, error, setDate, retry: fetchStats };
 }

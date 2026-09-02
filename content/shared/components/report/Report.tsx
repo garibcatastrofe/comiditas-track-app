@@ -3,7 +3,13 @@ import { TextApp } from "@/content/shared/ui/text/TextApp";
 import { Pressable, View } from "react-native";
 
 /* ICONS */
-import { Check, CircleQuestionMark, Minus, X } from "lucide-react-native";
+import {
+  Check,
+  CircleAlert,
+  CircleQuestionMark,
+  Minus,
+  X,
+} from "lucide-react-native";
 
 /* THEME */
 import { useTheme } from "@/theme/ThemeContext";
@@ -22,6 +28,7 @@ export function Report({
   dinnerStatus,
   goAction,
   twClassName,
+  exist = true,
 }: IReportProps) {
   const { theme } = useTheme();
 
@@ -35,20 +42,29 @@ export function Report({
         {formatDate(date)}
       </TextApp>
       <View className="gap-4">
-        <View className="flex-row items-center justify-between gap-4">
-          <TextApp className="text-lg">Desayuno</TextApp>
-          <ReportStatusTag status={breakfastStatus} />
-        </View>
+        {exist ? (
+          <>
+            <View className="flex-row items-center justify-between gap-4">
+              <TextApp className="text-lg">Desayuno</TextApp>
+              <ReportStatusTag status={breakfastStatus} />
+            </View>
 
-        <View className="flex-row items-center justify-between gap-4">
-          <TextApp className="text-lg">Comida</TextApp>
-          <ReportStatusTag status={lunchStatus} />
-        </View>
+            <View className="flex-row items-center justify-between gap-4">
+              <TextApp className="text-lg">Comida</TextApp>
+              <ReportStatusTag status={lunchStatus} />
+            </View>
 
-        <View className="flex-row items-center justify-between gap-4">
-          <TextApp className="text-lg">Cena</TextApp>
-          <ReportStatusTag status={dinnerStatus} />
-        </View>
+            <View className="flex-row items-center justify-between gap-4">
+              <TextApp className="text-lg">Cena</TextApp>
+              <ReportStatusTag status={dinnerStatus} />
+            </View>
+          </>
+        ) : (
+          <View className="flex-row items-center justify-center gap-4">
+            <CircleAlert size={20} color={theme.danger} />
+            <TextApp>Sin registros</TextApp>
+          </View>
+        )}
       </View>
     </Pressable>
   );
