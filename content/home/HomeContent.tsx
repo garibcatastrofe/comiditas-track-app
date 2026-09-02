@@ -1,15 +1,13 @@
 /* COMPONENTS */
 import { Report } from "@/content/shared/components/report/Report";
 import { Title } from "@/content/shared/components/title/Title";
+import { TryAgainContent } from "@/content/shared/components/tryAgainContent/TryAgainContent";
 import { TextApp } from "@/content/shared/ui/text/TextApp";
-import { Pressable, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 /* HOOKS */
 import { useReport } from "./hooks/useReport";
-
-/* ICONS */
-import { RefreshCw } from "lucide-react-native";
 
 /* NAVIGATION */
 import { useRouter } from "expo-router";
@@ -67,34 +65,5 @@ export function HomeContent() {
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
-}
-
-function TryAgainContent({
-  action,
-  label,
-}: {
-  action: () => void;
-  label: string;
-}) {
-  const { theme } = useTheme();
-
-  return (
-    <View className="gap-4">
-      <TextApp>{label}</TextApp>
-      <Pressable
-        onPress={action}
-        className="flex-row items-center justify-center gap-4 p-4 rounded-xl"
-        style={{ backgroundColor: theme.primary }}
-      >
-        <RefreshCw size={20} color={theme.primary_txt} />
-        <TextApp
-          className="text-lg"
-          style={{ fontFamily: "DMSans_700Bold", color: theme.primary_txt }}
-        >
-          Intentar nuevamente
-        </TextApp>
-      </Pressable>
-    </View>
   );
 }
