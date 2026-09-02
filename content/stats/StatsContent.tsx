@@ -114,7 +114,7 @@ export function StatsContent() {
                   goAction={() =>
                     router.push({
                       pathname: "/reports/[date]/report",
-                      params: { id: item.id ?? 0 },
+                      params: { date: item.date },
                     })
                   }
                 />

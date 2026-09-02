@@ -6,8 +6,8 @@ import { IReportStats } from "../domain/interfaces/IReportStats";
 
 const { reports } = ServiceContainer;
 
-export class ClsReportController {
-  public async insertReport({
+export abstract class ClsReportController {
+  static async insertReport({
     date,
     breakfastStatus,
     lunchStatus,
@@ -44,7 +44,7 @@ export class ClsReportController {
     }
   }
 
-  public async selectReportByDate({ date }: { date: string }): Promise<{
+  static async selectReportByDate({ date }: { date: string }): Promise<{
     message: string;
     ok: boolean;
     report: IReportPrimitive | null;
@@ -68,7 +68,7 @@ export class ClsReportController {
     }
   }
 
-  public async selectReportStats({
+  static async selectReportStats({
     month,
     year,
   }: {
@@ -102,7 +102,7 @@ export class ClsReportController {
     }
   }
 
-  public async updateReport({
+  static async updateReport({
     date,
     report,
   }: {

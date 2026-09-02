@@ -1,47 +1,27 @@
-/* API */
-import { IReportPrimitive } from "@/src/reports/domain/interfaces/IReportPrimitive";
-
 /* COMPONENTS */
 import { Report } from "@/content/shared/components/report/Report";
 import { Title } from "@/content/shared/components/title/Title";
 import { TextApp } from "@/content/shared/ui/text/TextApp";
-import { ScrollView, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+/* HOOKS */
+import { useReport } from "./hooks/useReport";
+
+/* ICONS */
+import { RefreshCw } from "lucide-react-native";
 
 /* NAVIGATION */
 import { useRouter } from "expo-router";
 
 /* THEME */
-import { db } from "@/src/db/drizzleSQLiteService";
-import { reports } from "@/src/db/schemas/reports";
 import { useTheme } from "@/theme/ThemeContext";
-import { useEffect } from "react";
 
 export function HomeContent() {
   const router = useRouter();
 
   const { theme } = useTheme();
-
-  const report: IReportPrimitive = {
-    id: 1,
-    date: "2026-08-27",
-    breakfastStatus: "excelent",
-    lunchStatus: "regular",
-    dinnerStatus: "terrible",
-  };
-
-  useEffect(() => {
-    try {
-      const getReports = async () => {
-        const reportsData = await db.select().from(reports);
-        console.log(reportsData);
-      };
-
-      getReports();
-    } catch (error) {
-      console.log("Error desde home: " + error);
-    }
-  }, []);
+  const { report, error, loading, setLoading } = useReport();
 
   return (
     <SafeAreaView
@@ -57,21 +37,64 @@ export function HomeContent() {
           ¿Cómo van tus comidas hoy?
         </TextApp>
         <View className="mx-6">
-          <Report
-            id={report.id}
-            date={report.date}
-            breakfastStatus={report.breakfastStatus}
-            lunchStatus={report.lunchStatus}
-            dinnerStatus={report.dinnerStatus}
-            goAction={() =>
-              router.push({
-                pathname: "/reports/[date]/report",
-                params: { id: report.id ?? 0 },
-              })
-            }
-          />
+          {loading ? (
+            <TextApp>Cargando...</TextApp>
+          ) : error ? (
+            <TryAgainContent
+              action={() => setLoading(true)}
+              label="Ocurrió un error al obtener el reporte"
+            />
+          ) : !report ? (
+            <TryAgainContent
+              action={() => setLoading(true)}
+              label="El reporte llegó sin información"
+            />
+          ) : (
+            <Report
+              id={report.id}
+              date={report.date}
+              breakfastStatus={report.breakfastStatus}
+              lunchStatus={report.lunchStatus}
+              dinnerStatus={report.dinnerStatus}
+              goAction={() =>
+                router.push({
+                  pathname: "/reports/[date]/report",
+                  params: { date: report.date },
+                })
+              }
+            />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+function TryAgainContent({
+  action,
+  label,
+}: {
+  action: () => void;
+  label: string;
+}) {
+  const { theme } = useTheme();
+
+  return (
+    <View className="gap-4">
+      <TextApp>{label}</TextApp>
+      <Pressable
+        onPress={action}
+        className="flex-row items-center justify-center gap-4 p-4 rounded-xl"
+        style={{ backgroundColor: theme.primary }}
+      >
+        <RefreshCw size={20} color={theme.primary_txt} />
+        <TextApp
+          className="text-lg"
+          style={{ fontFamily: "DMSans_700Bold", color: theme.primary_txt }}
+        >
+          Intentar nuevamente
+        </TextApp>
+      </Pressable>
+    </View>
   );
 }
