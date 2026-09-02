@@ -5,7 +5,7 @@ import {
   IReportStats,
 } from "../../domain/interfaces/IReportStats";
 
-export class ClsSelectStats {
+export class ClsSelectReportsStats {
   public constructor(private readonly reportRepository: IReportRepository) {}
 
   public async run({

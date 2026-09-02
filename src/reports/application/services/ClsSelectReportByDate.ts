@@ -2,7 +2,7 @@ import { ClsReportDate } from "../../domain/entities/valueObjects/ClsReportDate"
 import { IReportPrimitive } from "../../domain/interfaces/IReportPrimitive";
 import { IReportRepository } from "../../domain/interfaces/IReportRepository";
 
-export class ClsSelectByDate {
+export class ClsSelectReportByDate {
   public constructor(private readonly reportRepository: IReportRepository) {}
 
   public async run({
