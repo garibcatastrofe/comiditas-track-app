@@ -1,4 +1,5 @@
 /* COMPONENTS */
+import { Modal } from "@/content/shared/components/modal/Modal";
 import { Report } from "@/content/shared/components/report/Report";
 import { Title } from "@/content/shared/components/title/Title";
 import { TryAgainContent } from "@/content/shared/components/tryAgainContent/TryAgainContent";
@@ -16,6 +17,9 @@ import { Download, SlidersHorizontal } from "lucide-react-native";
 /* NAVIGATION */
 import { useRouter } from "expo-router";
 
+/* STORES */
+import { useModal } from "@/content/shared/components/modal/stores/modalStore";
+
 /* THEME */
 import { useTheme } from "@/theme/ThemeContext";
 
@@ -23,6 +27,7 @@ export function StatsContent() {
   const router = useRouter();
   const { theme } = useTheme();
   const { stats, error, loading, setDate, retry } = useStats();
+  const { setModal } = useModal();
 
   return (
     <SafeAreaView
@@ -54,7 +59,9 @@ export function StatsContent() {
                 style={{
                   backgroundColor: theme.primary,
                 }}
-                onPress={() => {}}
+                onPress={() =>
+                  setModal({ isActivated: true, title: "Filtrar", body: <></> })
+                }
               >
                 <SlidersHorizontal size={20} color={theme.primary_txt} />
               </Pressable>
@@ -124,6 +131,8 @@ export function StatsContent() {
                 />
               )}
             />
+
+            <Modal />
           </View>
         )}
       </ScrollView>
