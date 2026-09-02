@@ -7,12 +7,16 @@ export interface IReportStats {
   objEmptyReport: ReportCount;
   recordedDays: string;
   notRecordedDays: string;
-  month: string;
-  year: string;
-  reports: IReportPrimitive[];
+  month: number;
+  year: number;
+  reports: IReportFinal[];
 }
 
-interface ReportCount {
+export interface ReportCount {
   count: number;
   focused: boolean;
+}
+
+export interface IReportFinal extends IReportPrimitive {
+  exist: boolean;
 }

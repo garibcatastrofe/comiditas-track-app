@@ -1,4 +1,3 @@
-import { ClsReportDate } from "../../domain/entities/valueObjects/ClsReportDate";
 import { ClsReportMealStatus } from "../../domain/entities/valueObjects/ClsReportMealStatus";
 import { IReportPrimitive } from "../../domain/interfaces/IReportPrimitive";
 
@@ -7,10 +6,6 @@ export class ClsReportPartialValidator {
     report: Partial<IReportPrimitive> | undefined,
   ): Partial<IReportPrimitive> {
     const validatedReport: Partial<IReportPrimitive> = {};
-
-    if (report?.date !== undefined) {
-      validatedReport.date = new ClsReportDate(report.date).value;
-    }
 
     if (report?.breakfastStatus !== undefined) {
       validatedReport.breakfastStatus = new ClsReportMealStatus(
