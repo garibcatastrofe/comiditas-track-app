@@ -24,6 +24,7 @@ export abstract class ClsReportController {
         lunchStatus,
         dinnerStatus,
       });
+      console.log("Buscando reporte...");
       return {
         message: "Reporte agregado correctamente",
         ok: true,

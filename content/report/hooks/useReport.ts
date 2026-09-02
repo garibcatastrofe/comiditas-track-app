@@ -1,12 +1,15 @@
 /* API */
 import { IReportPrimitive } from "@/src/reports/domain/interfaces/IReportPrimitive";
+import { ClsReportController } from "@/src/reports/infrastructure/ClsReportController";
 
 /* HOOKS */
 import { useEffect, useState } from "react";
 
-export function useReport(id: string) {
+export function useReport(date: string) {
   const [report, setReport] = useState<IReportPrimitive | null>(null);
   const [updating, setUpdating] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const changeMealStatus = (status: string, meal: string) => {
     if (!report) return;
@@ -46,18 +49,15 @@ export function useReport(id: string) {
   };
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setReport({
-        id: Number(id),
-        breakfastStatus: "excelent",
-        lunchStatus: "regular",
-        dinnerStatus: "terrible",
-        date: "2026-08-27",
-      });
-    }, 3000);
+    const fetchReport = async () => {
+      const response = await ClsReportController.selectReportByDate({ date });
 
-    return () => clearTimeout(timeout);
-  }, []);
+      if (response.ok) {
+        setReport(response.report);
+        setLoading(false);
+      }
+    };
+  }, [loading]);
 
   const updateReport = async () => {
     try {

@@ -19,7 +19,7 @@ export function HomeContent() {
   const router = useRouter();
 
   const { theme } = useTheme();
-  const { report, error, loading, setLoading } = useReport();
+  const { report, error, loading, retry } = useReport();
 
   return (
     <SafeAreaView
@@ -39,12 +39,12 @@ export function HomeContent() {
             <TextApp>Cargando...</TextApp>
           ) : error ? (
             <TryAgainContent
-              action={() => setLoading(true)}
+              action={retry}
               label="Ocurrió un error al obtener el reporte"
             />
           ) : !report ? (
             <TryAgainContent
-              action={() => setLoading(true)}
+              action={retry}
               label="El reporte llegó sin información"
             />
           ) : (
