@@ -43,7 +43,7 @@ export class ClsUpdateReport {
       );
 
       if (Object.keys(reportValidated).length > 0) {
-        await this.reportRepository.update(report.id ?? 0, reportValidated);
+        await this.reportRepository.update(report.date ?? 0, reportValidated);
       }
 
       return;

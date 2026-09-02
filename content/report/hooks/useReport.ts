@@ -56,7 +56,16 @@ export function useReport(date: string) {
     const response = await ClsReportController.selectReportByDate({ date });
 
     if (response.ok) {
-      setReport(response.report);
+      if (response.report) {
+        setReport(response.report);
+      } else {
+        setReport({
+          date,
+          breakfastStatus: "empty",
+          lunchStatus: "empty",
+          dinnerStatus: "empty",
+        });
+      }
     } else {
       setError(true);
     }
@@ -75,7 +84,7 @@ export function useReport(date: string) {
 
     if (report) {
       const response = await ClsReportController.updateReport({
-        date: report.date,
+        date,
         report,
       });
 
@@ -91,5 +100,7 @@ export function useReport(date: string) {
     updating,
     updateReport,
     retry: fetchReport,
+    loading,
+    error,
   };
 }

@@ -67,7 +67,7 @@ export class ClsReportSQLiteRepository implements IReportRepository {
   }
 
   public async update(
-    id: number,
+    date: string,
     report: Partial<IReportPrimitive>,
   ): Promise<void> {
     const updateData: Partial<typeof reports.$inferInsert> = {};
@@ -88,6 +88,6 @@ export class ClsReportSQLiteRepository implements IReportRepository {
       return;
     }
 
-    await db.update(reports).set(updateData).where(eq(reports.id, id));
+    await db.update(reports).set(updateData).where(eq(reports.date, date));
   }
 }

@@ -1,5 +1,6 @@
 /* COMPONENTS */
 import { Title } from "@/content/shared/components/title/Title";
+import { TryAgainContent } from "@/content/shared/components/tryAgainContent/TryAgainContent";
 import { TextApp } from "@/content/shared/ui/text/TextApp";
 import { Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -33,7 +34,15 @@ export function ReportContent() {
   const { date } = useLocalSearchParams<{ date: string }>();
 
   const { theme } = useTheme();
-  const { report, changeMealStatus, updateReport, updating } = useReport(date);
+  const {
+    report,
+    changeMealStatus,
+    updateReport,
+    updating,
+    retry,
+    loading,
+    error,
+  } = useReport(date);
 
   return (
     <SafeAreaView
@@ -55,9 +64,18 @@ export function ReportContent() {
           ¿Cómo fueron tus comidas este día?
         </TextApp>
 
-        {!report ? (
-          <View className="gap-4 mx-6">
+        {loading ? (
+          <View className="mx-6">
             <TextApp>Cargando...</TextApp>
+          </View>
+        ) : error ? (
+          <TryAgainContent
+            action={retry}
+            label="Ocurrió un error al obtener el reporte"
+          />
+        ) : !report ? (
+          <View className="mx-6">
+            <TextApp className="text-lg">El reporte llegó nulo</TextApp>
           </View>
         ) : (
           <View className="gap-4 mx-6">
@@ -89,7 +107,7 @@ export function ReportContent() {
         )}
       </ScrollView>
 
-      {report && (
+      {!loading && !error && (
         <Pressable
           className="flex-row items-center justify-center gap-4 p-4 mx-6 mb-6 rounded-full"
           style={{

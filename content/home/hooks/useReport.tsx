@@ -1,8 +1,13 @@
-import { getToday } from "@/content/shared/utils/formatDate";
+/* API */
 import { IReportPrimitive } from "@/src/reports/domain/interfaces/IReportPrimitive";
 import { ClsReportController } from "@/src/reports/infrastructure/ClsReportController";
+
+/* HOOKS */
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
+
+/* UTILS */
+import { getToday } from "@/content/shared/utils/formatDate";
 
 export function useReport() {
   const [report, setReport] = useState<IReportPrimitive | null>(null);

@@ -2,7 +2,7 @@ import { IReportPrimitive } from "./IReportPrimitive";
 
 export interface IReportRepository {
   insert(report: IReportPrimitive): Promise<IReportPrimitive>;
-  update(id: number, report: Partial<IReportPrimitive>): Promise<void>;
+  update(date: string, report: Partial<IReportPrimitive>): Promise<void>;
   select(query: {
     fromDate: string;
     toDate: string;

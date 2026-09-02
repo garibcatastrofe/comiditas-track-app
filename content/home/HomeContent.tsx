@@ -36,7 +36,9 @@ export function HomeContent() {
         </TextApp>
         <View className="mx-6">
           {loading ? (
-            <TextApp>Cargando...</TextApp>
+            <View className="mx-6">
+              <TextApp>Cargando...</TextApp>
+            </View>
           ) : error ? (
             <TryAgainContent
               action={retry}
