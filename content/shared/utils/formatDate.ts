@@ -18,6 +18,10 @@ export function formatDate(date: string): string {
   return `${day} de ${months[month - 1]} del ${year}`;
 }
 
+export function getMonthText(month: number): string {
+  return months[month - 1];
+}
+
 export function getToday(): string {
   const today = new Date();
   return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;

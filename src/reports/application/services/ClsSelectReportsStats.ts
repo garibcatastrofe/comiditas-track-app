@@ -60,7 +60,11 @@ export class ClsSelectReportsStats {
     */
     for (let i = 0; i < lastDay; i++) {
       const date =
-        year.toString() + "-" + month.toString() + "-" + (i + 1).toString();
+        year.toString() +
+        "-" +
+        this.getMonthString(month) +
+        "-" +
+        this.getDayString(i + 1);
       const reportFound = reports.find((r) => r.date === date);
 
       if (reportFound) {
@@ -172,5 +176,21 @@ export class ClsSelectReportsStats {
     const lastDay = new Date(year, month, 0);
 
     return lastDay.getDate();
+  }
+
+  private getMonthString(month: number) {
+    if (month < 10) {
+      return "0" + month.toString();
+    }
+
+    return month.toString();
+  }
+
+  private getDayString(day: number) {
+    if (day < 10) {
+      return "0" + day.toString();
+    }
+
+    return day.toString();
   }
 }

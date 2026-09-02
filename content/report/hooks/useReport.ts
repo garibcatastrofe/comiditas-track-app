@@ -88,7 +88,7 @@ export function useReport(date: string) {
         report,
       });
 
-      console.log(response.message);
+      //console.log(response.message);
     }
 
     setUpdating(false);

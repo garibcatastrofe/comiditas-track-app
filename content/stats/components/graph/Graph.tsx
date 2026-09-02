@@ -12,6 +12,9 @@ import { useState } from "react";
 /* THEME */
 import { useTheme } from "@/theme/ThemeContext";
 
+/* UTILS */
+import { getMonthText } from "@/content/shared/utils/formatDate";
+
 export function Graph({
   objExcelentReport,
   objRegularReport,
@@ -68,12 +71,12 @@ export function Graph({
           innerCircleColor={theme.card}
           centerLabelComponent={() => {
             return (
-              <View className="items-center justify-center">
+              <View className="items-center justify-center gap-1">
                 <TextApp
                   style={{ fontFamily: "DMSans_700Bold", color: theme.ink }}
                   className="text-2xl"
                 >
-                  {month}
+                  {getMonthText(month)}
                 </TextApp>
                 <TextApp>{year}</TextApp>
               </View>
