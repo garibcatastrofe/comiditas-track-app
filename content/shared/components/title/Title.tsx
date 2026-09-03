@@ -1,5 +1,5 @@
 /* COMPONENTS */
-import { TextTitle } from "../../ui/text/TextTitle";
+import { TextTitle } from "../textTitle/TextTitle";
 
 /* THEME */
 import { useTheme } from "@/theme/ThemeContext";

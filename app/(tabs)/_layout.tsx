@@ -1,4 +1,4 @@
-import { HapticTab } from "@/content/shared/ui/button/HapticTab";
+import { HapticTab } from "@/content/shared/components/hapticTab/HapticTab";
 import { useTheme } from "@/theme/ThemeContext";
 import { Tabs } from "expo-router";
 import { ChartLine, House } from "lucide-react-native";

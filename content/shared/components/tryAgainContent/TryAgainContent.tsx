@@ -1,6 +1,6 @@
 /* COMPONENTS */
 import { Pressable, View } from "react-native";
-import { TextApp } from "../../ui/text/TextApp";
+import { TextApp } from "../textApp/TextApp";
 
 /* ICONS */
 import { RefreshCw } from "lucide-react-native";

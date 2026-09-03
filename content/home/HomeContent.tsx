@@ -1,8 +1,8 @@
 /* COMPONENTS */
 import { Report } from "@/content/shared/components/report/Report";
+import { TextApp } from "@/content/shared/components/textApp/TextApp";
 import { Title } from "@/content/shared/components/title/Title";
 import { TryAgainContent } from "@/content/shared/components/tryAgainContent/TryAgainContent";
-import { TextApp } from "@/content/shared/ui/text/TextApp";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 

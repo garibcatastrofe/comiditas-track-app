@@ -10,7 +10,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 /* COMPONENTS */
-import { TextApp } from "../../ui/text/TextApp";
+import { TextApp } from "../textApp/TextApp";
 
 /* HOOKS */
 import React, { useEffect } from "react";
@@ -72,11 +72,6 @@ export default function Announcement() {
             "worklet";
             if (finished) {
               // Limpiamos el estado global una vez terminó de esconderse
-              /* runOnJS(setAnnouncement)({
-                isActivated: null,
-                announceType: null,
-                message: null,
-              }); */
               scheduleOnRN(setAnnouncement, {
                 isActivated: null,
                 announceType: null,

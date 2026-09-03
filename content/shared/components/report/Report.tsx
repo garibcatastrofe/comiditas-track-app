@@ -1,5 +1,5 @@
 /* COMPONENTS */
-import { TextApp } from "@/content/shared/ui/text/TextApp";
+import { TextApp } from "@/content/shared/components/textApp/TextApp";
 import { Pressable, View } from "react-native";
 
 /* ICONS */

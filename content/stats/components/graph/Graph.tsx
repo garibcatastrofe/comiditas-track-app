@@ -2,7 +2,7 @@
 import { IReportStats } from "@/src/reports/domain/interfaces/IReportStats";
 
 /* COMPONENTS */
-import { TextApp } from "@/content/shared/ui/text/TextApp";
+import { TextApp } from "@/content/shared/components/textApp/TextApp";
 import { View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 

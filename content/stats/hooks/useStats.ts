@@ -30,7 +30,7 @@ export function useStats() {
     }
 
     setLoading(false);
-  }, []);
+  }, [date]);
 
   useFocusEffect(
     useCallback(() => {

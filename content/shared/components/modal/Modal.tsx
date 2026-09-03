@@ -7,7 +7,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 /* COMPONENTS */
-import { TextApp } from "@/content/shared/ui/text/TextApp";
+import { TextApp } from "@/content/shared/components/textApp/TextApp";
 import { Pressable, View } from "react-native";
 
 /* HOOKS */
