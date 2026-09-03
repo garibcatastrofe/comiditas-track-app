@@ -81,7 +81,7 @@ export function Modal() {
         style={[
           modalStyle,
           {
-            backgroundColor: theme.background,
+            backgroundColor: theme.surface,
             borderWidth: 1,
             borderColor: theme.line,
           },
