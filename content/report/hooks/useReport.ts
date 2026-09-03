@@ -1,12 +1,17 @@
 /* API */
 import { IReportPrimitive } from "@/src/reports/domain/interfaces/IReportPrimitive";
 import { ClsReportController } from "@/src/reports/infrastructure/ClsReportController";
-import { useFocusEffect } from "expo-router";
 
 /* HOOKS */
+import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 
+/* STORES */
+import { useAnnouncement } from "@/content/shared/components/announcement/stores/announcementStore";
+
 export function useReport(date: string) {
+  const { setAnnouncement } = useAnnouncement();
+
   const [report, setReport] = useState<IReportPrimitive | null>(null);
   const [updating, setUpdating] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
@@ -88,7 +93,19 @@ export function useReport(date: string) {
         report,
       });
 
-      //console.log(response.message);
+      if (response.ok) {
+        setAnnouncement({
+          isActivated: true,
+          announceType: "ok",
+          message: response.message,
+        });
+      } else {
+        setAnnouncement({
+          isActivated: true,
+          announceType: "error",
+          message: response.message,
+        });
+      }
     }
 
     setUpdating(false);

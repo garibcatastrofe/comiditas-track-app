@@ -77,14 +77,26 @@ export function Modal() {
         onTouchEnd={hideModal}
       />
       <Animated.View
-        className="w-11/12 p-4 rounded-2xl"
-        style={[modalStyle, { backgroundColor: theme.background }]}
+        className="w-11/12 p-6 rounded-2xl"
+        style={[
+          modalStyle,
+          {
+            backgroundColor: theme.background,
+            borderWidth: 1,
+            borderColor: theme.line,
+          },
+        ]}
         pointerEvents={modal.isActivated ? "auto" : "none"}
       >
         <View className="flex-row items-center justify-between">
-          <TextApp className="text-2xl">{modal.title}</TextApp>
+          <TextApp
+            className="text-2xl"
+            style={{ fontFamily: "DMSans_700Bold", color: theme.ink }}
+          >
+            {modal.title}
+          </TextApp>
           <Pressable className="p-2" hitSlop={20} onPress={hideModal}>
-            <X size={24} color={theme.body} />
+            <X size={24} color={theme.ink} />
           </Pressable>
         </View>
 

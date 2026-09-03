@@ -1,3 +1,5 @@
+import Announcement from "@/content/shared/components/announcement/Announcement";
+import { Modal } from "@/content/shared/components/modal/Modal";
 import { db } from "@/src/db/drizzleSQLiteService";
 import { ThemeProvider, useTheme } from "@/theme/ThemeContext";
 import { migrate } from "drizzle-orm/expo-sqlite/migrator";
@@ -72,6 +74,8 @@ function RootNavigator() {
 
   return (
     <View style={{ backgroundColor: theme.background, flex: 1 }}>
+      <Announcement />
+      <Modal />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen

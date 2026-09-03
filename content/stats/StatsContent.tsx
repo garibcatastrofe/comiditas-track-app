@@ -1,5 +1,4 @@
 /* COMPONENTS */
-import { Modal } from "@/content/shared/components/modal/Modal";
 import { Report } from "@/content/shared/components/report/Report";
 import { Title } from "@/content/shared/components/title/Title";
 import { TryAgainContent } from "@/content/shared/components/tryAgainContent/TryAgainContent";
@@ -60,7 +59,21 @@ export function StatsContent() {
                   backgroundColor: theme.primary,
                 }}
                 onPress={() =>
-                  setModal({ isActivated: true, title: "Filtrar", body: <></> })
+                  setModal({
+                    isActivated: true,
+                    title: "Filtrar",
+                    body: (
+                      <>
+                        <TextApp>
+                          Lorem ipsum, dolor sit amet consectetur adipisicing
+                          elit. Quia commodi facere, repellendus consequatur,
+                          facilis in suscipit optio reprehenderit earum harum
+                          officiis numquam veniam perferendis autem.
+                          Consequatur, repudiandae eligendi. Et, aut.
+                        </TextApp>
+                      </>
+                    ),
+                  })
                 }
               >
                 <SlidersHorizontal size={20} color={theme.primary_txt} />
@@ -131,8 +144,6 @@ export function StatsContent() {
                 />
               )}
             />
-
-            <Modal />
           </View>
         )}
       </ScrollView>
