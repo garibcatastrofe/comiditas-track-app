@@ -75,7 +75,7 @@ export class ClsSelectReportsStats {
 
         if (reportFound.lunchStatus === "excelent") excelentCount++;
         else if (reportFound.lunchStatus === "regular") regularCount++;
-        else if (reportFound.dinnerStatus === "terrible") terribleCount++;
+        else if (reportFound.lunchStatus === "terrible") terribleCount++;
         else emptyCount++;
 
         if (reportFound.dinnerStatus === "excelent") excelentCount++;
