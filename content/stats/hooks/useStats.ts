@@ -13,15 +13,18 @@ export function useStats() {
   const [stats, setStats] = useState<IReportStats | null>(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [date, setDate] = useState<{ month: number; year: number }>(
-    getMonthYear(),
-  );
+  const [date, setDate] = useState<Date | null>(new Date());
 
   const fetchStats = useCallback(async () => {
     setLoading(true);
     setError(false);
 
-    const response = await ClsReportController.selectReportStats(date);
+    const { month, year } = getMonthYear(date ?? new Date());
+
+    const response = await ClsReportController.selectReportStats({
+      month,
+      year,
+    });
 
     if (response.ok) {
       setStats(response.stats);
@@ -38,5 +41,5 @@ export function useStats() {
     }, [fetchStats]),
   );
 
-  return { stats, loading, error, setDate, retry: fetchStats };
+  return { stats, loading, error, setDate, retry: fetchStats, date };
 }

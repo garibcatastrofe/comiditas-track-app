@@ -6,6 +6,7 @@ import { TryAgainContent } from "@/content/shared/components/tryAgainContent/Try
 import { FlatList, Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Graph } from "./components/graph/Graph";
+import { ModalBodyFilterStats } from "./components/modalBodyFilterStats/ModalBodyFilterStats";
 
 /* HOOKS */
 import { useStats } from "./hooks/useStats";
@@ -25,7 +26,7 @@ import { useTheme } from "@/theme/ThemeContext";
 export function StatsContent() {
   const router = useRouter();
   const { theme } = useTheme();
-  const { stats, error, loading, setDate, retry } = useStats();
+  const { stats, error, loading, setDate, retry, date } = useStats();
   const { setModal } = useModal();
 
   return (
@@ -63,15 +64,7 @@ export function StatsContent() {
                     isActivated: true,
                     title: "Filtrar",
                     body: (
-                      <>
-                        <TextApp>
-                          Lorem ipsum, dolor sit amet consectetur adipisicing
-                          elit. Quia commodi facere, repellendus consequatur,
-                          facilis in suscipit optio reprehenderit earum harum
-                          officiis numquam veniam perferendis autem.
-                          Consequatur, repudiandae eligendi. Et, aut.
-                        </TextApp>
-                      </>
+                      <ModalBodyFilterStats value={date} onChange={setDate} />
                     ),
                   })
                 }
