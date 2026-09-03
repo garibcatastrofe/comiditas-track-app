@@ -4,7 +4,7 @@ import { Portal } from "@gorhom/portal";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import { Calendar } from "lucide-react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import DateTimePicker, { DateType } from "react-native-ui-datepicker";
 
@@ -63,7 +63,7 @@ export function DinamicInputDate({
         <Portal>
           <Pressable
             style={{
-              ...StyleSheet.absoluteFillObject,
+              ...StyleSheet.absoluteFill,
             }}
             className="bg-black/50 justify-center items-center z-[999]"
             onPress={() => setShowPicker(false)} // 👈 cierra al tocar el overlay

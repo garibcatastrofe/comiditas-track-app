@@ -1,8 +1,6 @@
-import { HapticTab } from "@/content/shared/components/hapticTab/HapticTab";
 import { useTheme } from "@/theme/ThemeContext";
 import { Tabs } from "expo-router";
 import { ChartLine, House } from "lucide-react-native";
-import React from "react";
 
 export default function TabLayout() {
   const { theme } = useTheme();
@@ -13,8 +11,8 @@ export default function TabLayout() {
         tabBarActiveTintColor: theme.primary,
         tabBarInactiveTintColor: theme.faint,
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarLabelVisibilityMode: "unlabeled",
+        /* tabBarButton: HapticTab, */
+        tabBarShowLabel: false,
         animation: "none",
         tabBarStyle: {
           backgroundColor: theme.primary_bg,
