@@ -123,7 +123,7 @@ export default function Announcement() {
             fontFamily: "DMSans_700Bold",
             color,
           }}
-          className="text-lg"
+          className="text-lg text-center"
         >
           {announcement.message}
         </TextApp>

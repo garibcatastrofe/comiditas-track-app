@@ -77,7 +77,7 @@ export function Modal() {
         onTouchEnd={hideModal}
       />
       <Animated.View
-        className="w-11/12 p-6 rounded-2xl"
+        className="w-[90%] p-6 rounded-2xl"
         style={[
           modalStyle,
           {
@@ -88,7 +88,7 @@ export function Modal() {
         ]}
         pointerEvents={modal.isActivated ? "auto" : "none"}
       >
-        <View className="flex-row items-center justify-between">
+        <View className="flex-row items-center justify-between mb-4">
           <TextApp
             className="text-2xl"
             style={{ fontFamily: "DMSans_700Bold", color: theme.ink }}

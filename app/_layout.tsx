@@ -2,6 +2,7 @@ import Announcement from "@/content/shared/components/announcement/Announcement"
 import { Modal } from "@/content/shared/components/modal/Modal";
 import { db } from "@/src/db/drizzleSQLiteService";
 import { ThemeProvider, useTheme } from "@/theme/ThemeContext";
+import { PortalProvider } from "@gorhom/portal";
 import { migrate } from "drizzle-orm/expo-sqlite/migrator";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -91,7 +92,9 @@ function RootNavigator() {
 function RootLayoutNav() {
   return (
     <ThemeProvider>
-      <RootNavigator />
+      <PortalProvider>
+        <RootNavigator />
+      </PortalProvider>
     </ThemeProvider>
   );
 }

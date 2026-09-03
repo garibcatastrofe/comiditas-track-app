@@ -1,23 +1,18 @@
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
+import { TextApp } from "@/content/shared/components/textApp/TextApp";
+import { useTheme } from "@/theme/ThemeContext";
+import { Portal } from "@gorhom/portal";
+import dayjs from "dayjs";
+import "dayjs/locale/es";
+import { Calendar } from "lucide-react-native";
 import React, { useState } from "react";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-
-type PickerMode = "date" | "time" | "datetime";
+import { Pressable, StyleSheet, View } from "react-native";
+import DateTimePicker, { DateType } from "react-native-ui-datepicker";
 
 interface DateInputProps {
   value: Date | null;
   onChange: (date: Date) => void;
   label?: string;
   placeholder?: string;
-  mode?: PickerMode;
   minimumDate?: Date;
   maximumDate?: Date;
 }
@@ -27,112 +22,144 @@ export function DinamicInputDate({
   onChange,
   label = "Fecha",
   placeholder = "Selecciona una fecha",
-  mode = "date",
   minimumDate,
   maximumDate,
 }: DateInputProps) {
+  const { theme } = useTheme();
+
   const [showPicker, setShowPicker] = useState<boolean>(false);
-
-  const handleChange = (
-    event: DateTimePickerEvent,
-    selectedDate?: Date,
-  ): void => {
-    // En Android el picker se cierra solo al elegir o cancelar
-    setShowPicker(Platform.OS === "ios");
-
-    if (event.type === "dismissed") {
-      setShowPicker(false);
-      return;
-    }
-
-    if (selectedDate) {
-      onChange(selectedDate);
-    }
-
-    if (Platform.OS === "android") {
-      setShowPicker(false);
-    }
-  };
+  const [tempDate, setTempDate] = useState<DateType>(
+    value ? dayjs(value) : dayjs(),
+  );
 
   const formatDate = (date: Date | null): string => {
     if (!date) return placeholder;
-    return date.toLocaleDateString("es-ES", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
+    return dayjs(date).format("DD/MM/YYYY");
+  };
+
+  const handleConfirm = (): void => {
+    if (tempDate) {
+      onChange(dayjs(tempDate).toDate());
+    }
+    setShowPicker(false);
   };
 
   return (
-    <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
+    <View className="mb-4">
+      {label && <TextApp className="mb-4 text-lg">{label}</TextApp>}
 
-      <TouchableOpacity
-        style={styles.input}
+      <Pressable
         onPress={() => setShowPicker(true)}
-        activeOpacity={0.7}
+        className="flex-row items-center justify-between p-4 border rounded-xl"
+        style={{ borderColor: theme.line_2 }}
       >
-        <Text style={value ? styles.valueText : styles.placeholderText}>
+        <TextApp style={{ color: value ? theme.body : theme.muted }}>
           {formatDate(value)}
-        </Text>
-      </TouchableOpacity>
+        </TextApp>
+        <Calendar size={20} color={theme.muted} />
+      </Pressable>
 
       {showPicker && (
-        <DateTimePicker
-          value={value || new Date()}
-          mode={mode}
-          display={Platform.OS === "ios" ? "spinner" : "default"}
-          onChange={handleChange}
-          minimumDate={minimumDate}
-          maximumDate={maximumDate}
-        />
-      )}
+        <Portal>
+          <Pressable
+            style={{
+              ...StyleSheet.absoluteFillObject,
+            }}
+            className="bg-black/50 justify-center items-center z-[999]"
+            onPress={() => setShowPicker(false)} // 👈 cierra al tocar el overlay
+          >
+            <Pressable
+              style={{
+                backgroundColor: theme.surface,
+                borderColor: theme.line,
+              }}
+              className="rounded-xl p-6 w-[90%] border"
+              onPress={() => {}} // 👈 "absorbe" el toque, no cierra
+            >
+              <DateTimePicker
+                mode="single"
+                date={tempDate}
+                onChange={(params) => setTempDate(params.date)}
+                minDate={minimumDate}
+                maxDate={maximumDate}
+                styles={{
+                  today: {
+                    borderColor: theme.primary,
+                    borderWidth: 1,
+                  },
+                  selected: {
+                    backgroundColor: theme.primary,
+                  },
+                  selected_label: { color: theme.primary_txt },
+                  day_label: {
+                    color: theme.body,
+                    fontFamily: "DMSans_700Bold",
+                  },
+                  disabled_label: { color: theme.muted },
+                  outside_label: { color: theme.muted },
+                  month_selector_label: {
+                    color: theme.ink,
+                    fontWeight: "600" as const,
+                    textTransform: "capitalize" as const, // 👈 "septiembre" → "Septiembre"
+                    fontFamily: "DMSans_700Bold",
+                    fontSize: 13,
+                  },
+                  year_selector_label: {
+                    color: theme.ink,
+                    fontWeight: "600" as const,
+                    fontFamily: "DMSans_700Bold",
+                  },
+                  weekday_label: {
+                    color: theme.muted,
+                    textTransform: "capitalize" as const, // 👈 "lun" → "Lun"
+                    fontFamily: "DMSans_700Bold",
+                    fontSize: 13,
+                  },
+                  // Estilos para la vista de selección de mes (cuando tocas el header)
+                  month_label: {
+                    color: theme.ink,
+                    textTransform: "capitalize" as const, // 👈 lista de meses en el selector
+                    fontSize: 13,
+                    fontFamily: "DMSans_700Bold",
+                  },
+                  year_label: {
+                    color: theme.ink,
+                    textTransform: "capitalize" as const, // 👈 lista de meses en el selector
+                    fontSize: 13,
+                    fontFamily: "DMSans_700Bold",
+                  },
+                  selected_month_label: {
+                    color: theme.ink,
+                    textTransform: "capitalize" as const,
+                  },
+                  /* header: { backgroundColor: colors.surface }, */
+                  button_prev: { tintColor: theme.body },
+                  button_next: { tintColor: theme.body },
+                }}
+                locale="es"
+              />
 
-      {Platform.OS === "ios" && showPicker && (
-        <TouchableOpacity
-          style={styles.doneButton}
-          onPress={() => setShowPicker(false)}
-        >
-          <Text style={styles.doneButtonText}>Listo</Text>
-        </TouchableOpacity>
+              <View className="flex-row justify-end gap-6 mt-4">
+                <Pressable onPress={() => setShowPicker(false)}>
+                  <TextApp style={{ fontFamily: "DMSans_700Bold" }}>
+                    Cancelar
+                  </TextApp>
+                </Pressable>
+                <Pressable onPress={handleConfirm}>
+                  <TextApp
+                    style={{
+                      fontFamily: "DMSans_700Bold",
+                      color: theme.primary,
+                    }}
+                  >
+                    Aceptar
+                  </TextApp>
+                </Pressable>
+              </View>
+            </Pressable>
+          </Pressable>
+        </Portal>
       )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: 8,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: "600",
-    marginBottom: 6,
-    color: "#333",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 14,
-    backgroundColor: "#fff",
-  },
-  valueText: {
-    fontSize: 16,
-    color: "#000",
-  },
-  placeholderText: {
-    fontSize: 16,
-    color: "#999",
-  },
-  doneButton: {
-    alignSelf: "flex-end",
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-  },
-  doneButtonText: {
-    color: "#007AFF",
-    fontWeight: "600",
-  },
-});
