@@ -3,10 +3,11 @@
     "name": "comiditas-track-app",
     "slug": "comiditas-track-app",
     "version": "1.0.0",
+    "backgroundColor": "#cccccc",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "comiditastrackapp",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true
     },
@@ -25,6 +26,7 @@
     "plugins": [
       "expo-router",
       "expo-sqlite",
+      "expo-system-ui",
       "@react-native-community/datetimepicker",
       [
         "expo-splash-screen",

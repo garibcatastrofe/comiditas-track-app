@@ -3,7 +3,6 @@ import { TextApp } from "@/content/shared/components/textApp/TextApp";
 import { Title } from "@/content/shared/components/title/Title";
 import { TryAgainContent } from "@/content/shared/components/tryAgainContent/TryAgainContent";
 import { Pressable, ScrollView, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 /* HOOKS */
 import { useReport } from "./hooks/useReport";
@@ -45,11 +44,12 @@ export function ReportContent() {
   } = useReport(date);
 
   return (
-    <SafeAreaView
-      className="flex-col justify-center flex-1"
-      style={{ backgroundColor: theme.background }}
-    >
-      <ScrollView className="flex-1 py-6" contentContainerClassName="gap-4">
+    <View style={{ backgroundColor: theme.danger, flex: 1 }}>
+      <ScrollView
+        className="flex-1 py-6"
+        contentContainerClassName="gap-4"
+        style={{ backgroundColor: theme.danger }}
+      >
         <View className="flex-row items-center mx-6">
           <Pressable onPress={() => router.back()}>
             <ArrowLeft size={24} color={theme.body} />
@@ -130,7 +130,7 @@ export function ReportContent() {
           </TextApp>
         </Pressable>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 

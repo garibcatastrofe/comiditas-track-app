@@ -8,9 +8,11 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
+import * as SystemUI from "expo-system-ui";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import "react-native-reanimated";
+import { SafeAreaView } from "react-native-safe-area-context";
 import migrations from "../drizzle/migrations";
 import "../global.css";
 export {
@@ -69,22 +71,39 @@ function RootNavigator() {
     }
   }, []);
 
+  useEffect(() => {
+    // Fondo nativo que se ve detrás de React
+    SystemUI.setBackgroundColorAsync(theme.danger);
+  }, [theme.danger]);
+
   if (!ready) {
     return null;
   }
 
   return (
-    <View style={{ backgroundColor: theme.background, flex: 1 }}>
-      <Announcement />
-      <Modal />
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="reports/[date]/report"
-          options={{ headerShown: false }}
-        />
-      </Stack>
+    <View style={{ flex: 1, backgroundColor: theme.danger }}>
       <StatusBar style={mode === "dark" ? "light" : "dark"} />
+
+      <SafeAreaView
+        style={{ flex: 1, backgroundColor: theme.danger }}
+        edges={["top", "left", "right"]}
+      >
+        <Announcement />
+        <Modal />
+        <Stack
+          screenOptions={{
+            contentStyle: {
+              backgroundColor: theme.danger,
+            },
+          }}
+        >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="reports/[date]/report"
+            options={{ headerShown: false, presentation: "modal" }}
+          />
+        </Stack>
+      </SafeAreaView>
     </View>
   );
 }

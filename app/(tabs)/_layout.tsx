@@ -11,7 +11,6 @@ export default function TabLayout() {
         tabBarActiveTintColor: theme.primary,
         tabBarInactiveTintColor: theme.faint,
         headerShown: false,
-        /* tabBarButton: HapticTab, */
         tabBarShowLabel: false,
         animation: "none",
         tabBarStyle: {
@@ -22,8 +21,8 @@ export default function TabLayout() {
           shadowColor: "transparent",
           borderTopColor: "transparent",
         },
-        tabBarIconStyle: {
-          marginTop: 4,
+        sceneStyle: {
+          backgroundColor: theme.danger,
         },
       }}
     >
