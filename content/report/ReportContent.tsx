@@ -44,11 +44,11 @@ export function ReportContent() {
   } = useReport(date);
 
   return (
-    <View style={{ backgroundColor: theme.danger, flex: 1 }}>
+    <View style={{ backgroundColor: theme.background, flex: 1 }}>
       <ScrollView
         className="flex-1 py-6"
         contentContainerClassName="gap-4"
-        style={{ backgroundColor: theme.danger }}
+        style={{ backgroundColor: theme.background }}
       >
         <View className="flex-row items-center mx-6">
           <Pressable onPress={() => router.back()}>

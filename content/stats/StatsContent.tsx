@@ -32,7 +32,7 @@ export function StatsContent() {
     <ScrollView
       className="flex-1 py-6"
       contentContainerClassName="gap-4"
-      style={{ backgroundColor: theme.danger }}
+      style={{ backgroundColor: theme.background }}
     >
       <Title text1="Mis" text2="estadísticas" />
 

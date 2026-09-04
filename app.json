@@ -3,11 +3,10 @@
     "name": "comiditas-track-app",
     "slug": "comiditas-track-app",
     "version": "1.0.0",
-    "backgroundColor": "#cccccc",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "comiditastrackapp",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true
     },
@@ -16,7 +15,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.garibcatastrofe.comiditastrackapp"
     },
     "web": {
       "bundler": "metro",
@@ -35,10 +35,18 @@
           "backgroundColor": "#ffffff",
           "imageWidth": 200
         }
-      ]
+      ],
+      "react-native-edge-to-edge"
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8eae51ab-8052-435f-8e99-579695ef6872"
+      }
+    },
+    "owner": "garibcatastrofe"
   }
 }

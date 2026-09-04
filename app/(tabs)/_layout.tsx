@@ -21,8 +21,11 @@ export default function TabLayout() {
           shadowColor: "transparent",
           borderTopColor: "transparent",
         },
+        tabBarIconStyle: {
+          marginTop: 4,
+        },
         sceneStyle: {
-          backgroundColor: theme.danger,
+          backgroundColor: theme.background,
         },
       }}
     >

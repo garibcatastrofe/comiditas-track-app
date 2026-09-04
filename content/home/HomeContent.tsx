@@ -24,7 +24,7 @@ export function HomeContent() {
     <ScrollView
       className="flex-1 py-6"
       contentContainerClassName="gap-4"
-      style={{ backgroundColor: theme.danger }}
+      style={{ backgroundColor: theme.background }}
     >
       <Title text1="Hola" text2="Garib" />
       <TextApp

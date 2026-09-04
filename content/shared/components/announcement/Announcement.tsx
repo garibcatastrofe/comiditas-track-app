@@ -13,7 +13,7 @@ import Animated, {
 import { TextApp } from "../textApp/TextApp";
 
 /* HOOKS */
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 /* STORES */
@@ -106,7 +106,7 @@ export default function Announcement() {
   return (
     <Animated.View
       pointerEvents="none"
-      className="absolute top-0 left-0 right-0 z-[9999] px-6 pb-6 rounded-b-3xl border-x-2 border-t-0 border-b-2"
+      className="absolute top-0 left-0 right-0 z-[9999] px-6 pb-6 border-b-2"
       style={[
         {
           paddingTop: insets.top + 12,
