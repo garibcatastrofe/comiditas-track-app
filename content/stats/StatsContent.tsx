@@ -1,26 +1,16 @@
-/* COMPONENTS */
+import { useModal } from "@/content/shared/components/modal/stores/modalStore";
 import { Report } from "@/content/shared/components/report/Report";
+import { ScrollViewContainer } from "@/content/shared/components/scrollViewContainer/ScrollViewContainer";
 import { TextApp } from "@/content/shared/components/textApp/TextApp";
 import { Title } from "@/content/shared/components/title/Title";
 import { TryAgainContent } from "@/content/shared/components/tryAgainContent/TryAgainContent";
-import { FlatList, Pressable, ScrollView, View } from "react-native";
+import { useTheme } from "@/theme/ThemeContext";
+import { useRouter } from "expo-router";
+import { Download, SlidersHorizontal } from "lucide-react-native";
+import { FlatList, Pressable, View } from "react-native";
 import { Graph } from "./components/graph/Graph";
 import { ModalBodyFilterStats } from "./components/modalBodyFilterStats/ModalBodyFilterStats";
-
-/* HOOKS */
 import { useStats } from "./hooks/useStats";
-
-/* ICONS */
-import { Download, SlidersHorizontal } from "lucide-react-native";
-
-/* NAVIGATION */
-import { useRouter } from "expo-router";
-
-/* STORES */
-import { useModal } from "@/content/shared/components/modal/stores/modalStore";
-
-/* THEME */
-import { useTheme } from "@/theme/ThemeContext";
 
 export function StatsContent() {
   const router = useRouter();
@@ -29,11 +19,7 @@ export function StatsContent() {
   const { setModal } = useModal();
 
   return (
-    <ScrollView
-      className="flex-1 py-6"
-      contentContainerClassName="gap-4"
-      style={{ backgroundColor: theme.background }}
-    >
+    <ScrollViewContainer>
       <Title text1="Mis" text2="estadísticas" />
 
       {loading ? (
@@ -138,6 +124,6 @@ export function StatsContent() {
           />
         </View>
       )}
-    </ScrollView>
+    </ScrollViewContainer>
   );
 }

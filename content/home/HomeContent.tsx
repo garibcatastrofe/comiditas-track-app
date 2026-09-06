@@ -1,31 +1,19 @@
-/* COMPONENTS */
 import { Report } from "@/content/shared/components/report/Report";
+import { ScrollViewContainer } from "@/content/shared/components/scrollViewContainer/ScrollViewContainer";
 import { TextApp } from "@/content/shared/components/textApp/TextApp";
 import { Title } from "@/content/shared/components/title/Title";
 import { TryAgainContent } from "@/content/shared/components/tryAgainContent/TryAgainContent";
-import { ScrollView, View } from "react-native";
-
-/* HOOKS */
-import { useReport } from "./hooks/useReport";
-
-/* NAVIGATION */
 import { useRouter } from "expo-router";
-
-/* THEME */
-import { useTheme } from "@/theme/ThemeContext";
+import { View } from "react-native";
+import { useReport } from "./hooks/useReport";
 
 export function HomeContent() {
   const router = useRouter();
 
   const { report, error, loading, retry } = useReport();
-  const { theme } = useTheme();
 
   return (
-    <ScrollView
-      className="flex-1 py-6"
-      contentContainerClassName="gap-4"
-      style={{ backgroundColor: theme.background }}
-    >
+    <ScrollViewContainer>
       <Title text1="Hola" text2="Garib" />
       <TextApp
         className="mx-6 mb-4 text-xl"
@@ -64,6 +52,6 @@ export function HomeContent() {
           />
         )}
       </View>
-    </ScrollView>
+    </ScrollViewContainer>
   );
 }
