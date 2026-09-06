@@ -1,3 +1,4 @@
+import { ClsDate } from "@/src/shared/domain/entities/date/ClsDate";
 import { ClsBadRequestError } from "@/src/shared/domain/entities/errors/ClsBadRequestError";
 import { IReportRepository } from "../../domain/interfaces/IReportRepository";
 import {
@@ -15,6 +16,8 @@ export class ClsSelectReportsStats {
     month: number;
     year: number;
   }): Promise<IReportStats> {
+    const objDate = new ClsDate();
+
     if (!month) {
       throw new ClsBadRequestError("Debe proporcionar el mes");
     }
@@ -33,7 +36,7 @@ export class ClsSelectReportsStats {
       throw new ClsBadRequestError("El año debe ser un número");
     }
 
-    const dateInterval = this.getMonthDateRange(month, year);
+    const dateInterval = objDate.getMonthDateRange({ month, year });
 
     const reports = await this.reportRepository.select({
       fromDate: dateInterval.firstDay,
@@ -48,7 +51,7 @@ export class ClsSelectReportsStats {
     let emptyCount = 0;
 
     const recordedDays = reports.length;
-    const lastDay = this.getMonthLastDay(month, year);
+    const lastDay = objDate.getMonthLastDay(month, year);
     const notRecordedDays = lastDay - recordedDays;
 
     /* 
@@ -62,9 +65,9 @@ export class ClsSelectReportsStats {
       const date =
         year.toString() +
         "-" +
-        this.getMonthString(month) +
+        objDate.getMonthString(month) +
         "-" +
-        this.getDayString(i + 1);
+        objDate.getDayString(i + 1);
       const reportFound = reports.find((r) => r.date === date);
 
       if (reportFound) {
@@ -158,39 +161,5 @@ export class ClsSelectReportsStats {
         focused: focused === "empty",
       },
     };
-  }
-
-  private getMonthDateRange(month: number, year: number) {
-    const firstDay = new Date(year, month - 1, 1);
-    const lastDay = new Date(year, month, 0);
-
-    const formatDate = (date: Date) => date.toISOString().split("T")[0];
-
-    return {
-      firstDay: formatDate(firstDay),
-      lastDay: formatDate(lastDay),
-    };
-  }
-
-  private getMonthLastDay(month: number, year: number): number {
-    const lastDay = new Date(year, month, 0);
-
-    return lastDay.getDate();
-  }
-
-  private getMonthString(month: number) {
-    if (month < 10) {
-      return "0" + month.toString();
-    }
-
-    return month.toString();
-  }
-
-  private getDayString(day: number) {
-    if (day < 10) {
-      return "0" + day.toString();
-    }
-
-    return day.toString();
   }
 }

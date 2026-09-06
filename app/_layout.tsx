@@ -77,13 +77,13 @@ function RootNavigator() {
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
       <SystemBars style={mode === "dark" ? "light" : "dark"} />
+      <Announcement />
       <Modal />
 
       <SafeAreaView
         style={{ flex: 1, backgroundColor: theme.background }}
         edges={["top", "left", "right"]}
       >
-        <Announcement />
         <Stack
           screenOptions={{
             contentStyle: {

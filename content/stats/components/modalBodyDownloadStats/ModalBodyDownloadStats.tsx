@@ -3,11 +3,18 @@ import { useModal } from "@/content/shared/components/modal/stores/modalStore";
 import { TextApp } from "@/content/shared/components/textApp/TextApp";
 import { DinamicInputDate } from "@/content/shared/form/dinamicInputDate/DinamicInputDate";
 import { useTheme } from "@/theme/ThemeContext";
-import * as Print from "expo-print";
+import { File, Paths } from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { useState } from "react";
 import { Alert, Pressable, View } from "react-native";
+import * as XLSX from "xlsx";
 import { useDownload } from "./stores/downloadStore";
+
+type Registro = {
+  fecha: string;
+  comida: string;
+  calorias: number;
+};
 
 export function ModalBodyDownloadStats() {
   const { theme } = useTheme();
@@ -18,34 +25,39 @@ export function ModalBodyDownloadStats() {
   const [type, setType] = useState<"monthly" | "annual">("monthly");
   const [date, setDate] = useState<Date | null>(new Date());
 
-  const generarYDescargarPDF = async () => {
-    const html = `
-        <html>
-          <body style="font-family: -apple-system, sans-serif; padding: 30px;">
-            <h1>Reporte Personalizado</h1>
-            <p><strong>Nombre:</strong>Garib</p>
-            <p><strong>Fecha:</strong> ${new Date().toLocaleDateString()}</p>
-            <p>Este es un pequeño usuario</p>
-          </body>
-        </html>
-      `;
-
+  const generarYDescargarExcel = async () => {
     try {
-      const { uri } = await Print.printToFileAsync({ html });
+      const datos: Registro[] = [
+        {
+          fecha: "2026-08-01",
+          comida: "Fresas",
+          calorias: 400,
+        },
+      ];
+      const worksheet = XLSX.utils.json_to_sheet(datos);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Comiditas");
+
+      const base64 = XLSX.write(workbook, { type: "base64", bookType: "xlsx" });
+
+      // Nueva API: crear un File dentro del directorio cache
+      const file = new File(Paths.cache, `reporte_${Date.now()}.xlsx`);
+      file.write(base64, { encoding: "base64" });
 
       const disponible = await Sharing.isAvailableAsync();
       if (disponible) {
-        await Sharing.shareAsync(uri, {
-          mimeType: "application/pdf",
-          dialogTitle: "Guardar o compartir PDF",
-          UTI: "com.adobe.pdf",
+        await Sharing.shareAsync(file.uri, {
+          mimeType:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          dialogTitle: "Guardar o compartir Excel",
+          UTI: "com.microsoft.excel.xlsx",
         });
       } else {
-        Alert.alert("PDF generado", `Guardado en: ${uri}`);
+        Alert.alert("Excel generado", `Guardado en: ${file.uri}`);
       }
     } catch (error) {
       console.error(error);
-      Alert.alert("Error", "No se pudo generar el PDF");
+      Alert.alert("Error", "No se pudo generar el Excel");
     }
   };
 
@@ -64,15 +76,13 @@ export function ModalBodyDownloadStats() {
       answerType: "info",
       message: "Descargando",
     });
-
-    await generarYDescargarPDF();
-
     setAnnouncement({
       isActivated: true,
-      announceType: "ok",
-      message: "Estadísticas descargadas correctamente",
+      announceType: "info",
+      message: "Generando PDF...",
     });
-    setModal({ isActivated: false, title: "Descargar", body: modal.body });
+    await generarYDescargarExcel();
+
     setDownload({
       downloading: false,
       answerType: "ok",
@@ -131,13 +141,18 @@ export function ModalBodyDownloadStats() {
           style={{
             backgroundColor: theme.card,
           }}
-          onPress={() =>
-            setModal({
+          onPress={() => {
+            /* setModal({
               isActivated: false,
               title: "Filtrar",
               body: modal.body,
-            })
-          }
+            }); */
+            setAnnouncement({
+              isActivated: true,
+              announceType: "info",
+              message: "Generando PDF...",
+            });
+          }}
         >
           <TextApp
             className="text-lg"

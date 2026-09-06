@@ -71,13 +71,13 @@ export function Modal() {
     >
       {/* Fondo oscuro animado */}
       <Animated.View
-        className="absolute top-0 left-0 w-full h-full bg-black/50"
+        className="absolute top-0 left-0 z-50 w-full h-full bg-black/50"
         style={overlayStyle}
         pointerEvents={modal.isActivated ? "auto" : "none"}
         onTouchEnd={hideModal}
       />
       <Animated.View
-        className="w-[90%] p-6 rounded-2xl"
+        className="w-[90%] p-6 rounded-2xl z-[60]"
         style={[
           modalStyle,
           {

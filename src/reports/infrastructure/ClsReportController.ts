@@ -76,7 +76,7 @@ export abstract class ClsReportController {
     year: number;
   }): Promise<{ message: string; ok: boolean; stats: IReportStats }> {
     try {
-      const stats = await reports.select.run({ month, year });
+      const stats = await reports.selectReportsStats.run({ month, year });
       return {
         message: "Estadísticas encontradas correctamente",
         ok: true,
@@ -117,6 +117,30 @@ export abstract class ClsReportController {
       };
     } catch (error) {
       return handleServerError(error);
+    }
+  }
+
+  static async selectReports({
+    date,
+    type,
+  }: {
+    date: Date;
+    type: "monthly" | "annual";
+  }): Promise<{ message: string; ok: boolean; reports: IReportPrimitive[] }> {
+    try {
+      const data = await reports.selectReports.run({ date, type });
+      return {
+        message: "Reportes obtenidos correctamente",
+        ok: true,
+        reports: data,
+      };
+    } catch (error) {
+      console.log("Error: " + error);
+      return {
+        message: "Ocurrió un error al buscar los reportes",
+        ok: false,
+        reports: [],
+      };
     }
   }
 }
