@@ -9,6 +9,7 @@ import { useRouter } from "expo-router";
 import { Download, SlidersHorizontal } from "lucide-react-native";
 import { FlatList, Pressable, View } from "react-native";
 import { Graph } from "./components/graph/Graph";
+import { ModalBodyDownloadStats } from "./components/modalBodyDownloadStats/ModalBodyDownloadStats";
 import { ModalBodyFilterStats } from "./components/modalBodyFilterStats/ModalBodyFilterStats";
 import { useStats } from "./hooks/useStats";
 
@@ -61,7 +62,13 @@ export function StatsContent() {
               style={{
                 backgroundColor: theme.primary,
               }}
-              onPress={() => {}}
+              onPress={() =>
+                setModal({
+                  isActivated: true,
+                  title: "Descargar",
+                  body: <ModalBodyDownloadStats />,
+                })
+              }
             >
               <Download size={20} color={theme.primary_txt} />
             </Pressable>

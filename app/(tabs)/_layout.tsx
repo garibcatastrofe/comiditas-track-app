@@ -14,12 +14,12 @@ export default function TabLayout() {
         tabBarShowLabel: false,
         animation: "none",
         tabBarStyle: {
-          backgroundColor: theme.primary_bg,
-          borderTopWidth: 0,
+          backgroundColor: theme.surface,
+          borderTopWidth: 1,
           elevation: 0,
           shadowOpacity: 0,
           shadowColor: "transparent",
-          borderTopColor: "transparent",
+          borderTopColor: theme.line,
         },
         tabBarIconStyle: {
           marginTop: 4,
