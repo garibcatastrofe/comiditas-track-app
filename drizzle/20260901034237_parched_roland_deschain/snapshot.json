@@ -1,0 +1,83 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "id": "3ae7347c-1547-46d3-8871-e7b5a887def0",
+  "prevIds": [
+    "00000000-0000-0000-0000-000000000000"
+  ],
+  "ddl": [
+    {
+      "name": "reports",
+      "entityType": "tables"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": true,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
+      "table": "reports"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "date",
+      "entityType": "columns",
+      "table": "reports"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "'empty'",
+      "generated": null,
+      "name": "breakfast",
+      "entityType": "columns",
+      "table": "reports"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "'empty'",
+      "generated": null,
+      "name": "lunch",
+      "entityType": "columns",
+      "table": "reports"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "'empty'",
+      "generated": null,
+      "name": "dinner",
+      "entityType": "columns",
+      "table": "reports"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "reports_pk",
+      "table": "reports",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "date"
+      ],
+      "nameExplicit": false,
+      "name": "reports_date_unique",
+      "entityType": "uniques",
+      "table": "reports"
+    }
+  ],
+  "renames": []
+}

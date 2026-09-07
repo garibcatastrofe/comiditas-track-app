@@ -1,17 +1,10 @@
-/* COMPONENTS */
-import { TextApp } from "@/content/shared/components/textApp/TextApp";
-import { DinamicInputDate } from "@/content/shared/form/dinamicInputDate/DinamicInputDate";
-import { Pressable, View } from "react-native";
-
-/* HOOKS */
-import { useState } from "react";
-
-/* STORES */
 import { useAnnouncement } from "@/content/shared/components/announcement/stores/announcementStore";
 import { useModal } from "@/content/shared/components/modal/stores/modalStore";
-
-/* THEME */
+import { TextApp } from "@/content/shared/components/textApp/TextApp";
+import { DinamicInputDate } from "@/content/shared/form/dinamicInputDate/DinamicInputDate";
 import { useTheme } from "@/theme/ThemeContext";
+import { useState } from "react";
+import { Pressable, View } from "react-native";
 
 export function ModalBodyFilterStats({
   value,

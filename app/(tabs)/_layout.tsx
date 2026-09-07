@@ -1,6 +1,6 @@
 import { useTheme } from "@/theme/ThemeContext";
 import { Tabs } from "expo-router";
-import { ChartLine, House } from "lucide-react-native";
+import { ChartLine, House, Info } from "lucide-react-native";
 
 export default function TabLayout() {
   const { theme } = useTheme();
@@ -14,15 +14,18 @@ export default function TabLayout() {
         tabBarShowLabel: false,
         animation: "none",
         tabBarStyle: {
-          backgroundColor: theme.primary_bg,
-          borderTopWidth: 0,
+          backgroundColor: theme.surface,
+          borderTopWidth: 1,
           elevation: 0,
           shadowOpacity: 0,
           shadowColor: "transparent",
-          borderTopColor: "transparent",
+          borderTopColor: theme.line,
+        },
+        tabBarIconStyle: {
+          marginTop: 4,
         },
         sceneStyle: {
-          backgroundColor: theme.danger,
+          backgroundColor: theme.background,
         },
       }}
     >
@@ -36,8 +39,15 @@ export default function TabLayout() {
       <Tabs.Screen
         name="stats"
         options={{
-          title: "Tab Two",
+          title: "Estadísticas",
           tabBarIcon: ({ color }) => <ChartLine size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="about"
+        options={{
+          title: "Acerca de",
+          tabBarIcon: ({ color }) => <Info size={24} color={color} />,
         }}
       />
     </Tabs>

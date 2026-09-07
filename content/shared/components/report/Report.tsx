@@ -1,8 +1,6 @@
-/* COMPONENTS */
 import { TextApp } from "@/content/shared/components/textApp/TextApp";
-import { Pressable, View } from "react-native";
-
-/* ICONS */
+import { formatDate } from "@/content/shared/utils/formatDate";
+import { useTheme } from "@/theme/ThemeContext";
 import {
   Check,
   CircleAlert,
@@ -10,15 +8,8 @@ import {
   Minus,
   X,
 } from "lucide-react-native";
-
-/* THEME */
-import { useTheme } from "@/theme/ThemeContext";
-
-/* TYPES */
+import { Pressable, View } from "react-native";
 import { IReportProps } from "./types/IReportProps";
-
-/* UTILS */
-import { formatDate } from "@/content/shared/utils/formatDate";
 
 export function Report({
   id,
@@ -94,22 +85,24 @@ function ReportStatusTag({ status }: { status: string }) {
     return "Vacío";
   };
 
-  const Icon = () => {
-    if (status === "excelent") return <Check size={20} color={theme.success} />;
-    if (status === "regular") return <Minus size={20} color={theme.warn} />;
-    if (status === "terrible") return <X size={20} color={theme.danger} />;
-    return <CircleQuestionMark size={20} color={theme.info} />;
-  };
-
   return (
     <View
       className="flex-row items-center gap-4 px-4 py-2 rounded-full"
       style={{ backgroundColor: getBackgroundColor(status) }}
     >
-      <Icon />
+      <Icon status={status} />
       <TextApp style={{ color: getTintColor(status) }}>
         {getLabel(status)}
       </TextApp>
     </View>
   );
+}
+
+function Icon({ status }: { status: string }) {
+  const { theme } = useTheme();
+
+  if (status === "excelent") return <Check size={20} color={theme.success} />;
+  if (status === "regular") return <Minus size={20} color={theme.warn} />;
+  if (status === "terrible") return <X size={20} color={theme.danger} />;
+  return <CircleQuestionMark size={20} color={theme.info} />;
 }

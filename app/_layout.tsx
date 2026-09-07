@@ -7,10 +7,9 @@ import { migrate } from "drizzle-orm/expo-sqlite/migrator";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { StatusBar } from "expo-status-bar";
-import * as SystemUI from "expo-system-ui";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
+import { SystemBars } from "react-native-edge-to-edge";
 import "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import migrations from "../drizzle/migrations";
@@ -71,29 +70,24 @@ function RootNavigator() {
     }
   }, []);
 
-  useEffect(() => {
-    // Fondo nativo que se ve detrás de React
-    SystemUI.setBackgroundColorAsync(theme.danger);
-  }, [theme.danger]);
-
   if (!ready) {
     return null;
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.danger }}>
-      <StatusBar style={mode === "dark" ? "light" : "dark"} />
+    <View style={{ flex: 1, backgroundColor: theme.background }}>
+      <SystemBars style={mode === "dark" ? "light" : "dark"} />
+      <Announcement />
+      <Modal />
 
       <SafeAreaView
-        style={{ flex: 1, backgroundColor: theme.danger }}
+        style={{ flex: 1, backgroundColor: theme.background }}
         edges={["top", "left", "right"]}
       >
-        <Announcement />
-        <Modal />
         <Stack
           screenOptions={{
             contentStyle: {
-              backgroundColor: theme.danger,
+              backgroundColor: theme.background,
             },
           }}
         >
