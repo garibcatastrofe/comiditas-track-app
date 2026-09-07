@@ -2,19 +2,15 @@ import { useAnnouncement } from "@/content/shared/components/announcement/stores
 import { useModal } from "@/content/shared/components/modal/stores/modalStore";
 import { TextApp } from "@/content/shared/components/textApp/TextApp";
 import { DinamicInputDate } from "@/content/shared/form/dinamicInputDate/DinamicInputDate";
+import { IReportPrimitive } from "@/src/reports/domain/interfaces/IReportPrimitive";
+import { ClsReportController } from "@/src/reports/infrastructure/ClsReportController";
 import { useTheme } from "@/theme/ThemeContext";
 import { File, Paths } from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { useState } from "react";
-import { Alert, Pressable, View } from "react-native";
+import { Pressable, View } from "react-native";
 import * as XLSX from "xlsx";
 import { useDownload } from "./stores/downloadStore";
-
-type Registro = {
-  fecha: string;
-  comida: string;
-  calorias: number;
-};
 
 export function ModalBodyDownloadStats() {
   const { theme } = useTheme();
@@ -25,16 +21,19 @@ export function ModalBodyDownloadStats() {
   const [type, setType] = useState<"monthly" | "annual">("monthly");
   const [date, setDate] = useState<Date | null>(new Date());
 
-  const generarYDescargarExcel = async () => {
+  const generarYDescargarExcel = async (reports: IReportPrimitive[]) => {
     try {
-      const datos: Registro[] = [
-        {
-          fecha: "2026-08-01",
-          comida: "Fresas",
-          calorias: 400,
-        },
-      ];
-      const worksheet = XLSX.utils.json_to_sheet(datos);
+      const newReports: Omit<IReportPrimitive, "id">[] = [];
+      reports.forEach((r) =>
+        newReports.push({
+          date: r.date,
+          breakfastStatus: r.breakfastStatus,
+          lunchStatus: r.lunchStatus,
+          dinnerStatus: r.dinnerStatus,
+        }),
+      );
+
+      const worksheet = XLSX.utils.json_to_sheet(newReports);
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "Comiditas");
 
@@ -53,11 +52,19 @@ export function ModalBodyDownloadStats() {
           UTI: "com.microsoft.excel.xlsx",
         });
       } else {
-        Alert.alert("Excel generado", `Guardado en: ${file.uri}`);
+        setAnnouncement({
+          isActivated: true,
+          announceType: "info",
+          message: `Excel generado en: ${file.uri}`,
+        });
       }
     } catch (error) {
       console.error(error);
-      Alert.alert("Error", "No se pudo generar el Excel");
+      setAnnouncement({
+        isActivated: true,
+        announceType: "error",
+        message: "Ocurrió un error al generar el Excel",
+      });
     }
   };
 
@@ -79,9 +86,23 @@ export function ModalBodyDownloadStats() {
     setAnnouncement({
       isActivated: true,
       announceType: "info",
-      message: "Generando PDF...",
+      message: "Generando Excel...",
     });
-    await generarYDescargarExcel();
+
+    const response = await ClsReportController.selectReports({
+      date: date ?? new Date(),
+      type,
+    });
+
+    if (response.ok) {
+      await generarYDescargarExcel(response.reports);
+    } else {
+      setAnnouncement({
+        isActivated: true,
+        announceType: "error",
+        message: response.message,
+      });
+    }
 
     setDownload({
       downloading: false,
@@ -142,15 +163,10 @@ export function ModalBodyDownloadStats() {
             backgroundColor: theme.card,
           }}
           onPress={() => {
-            /* setModal({
+            setModal({
               isActivated: false,
-              title: "Filtrar",
+              title: "Descargar",
               body: modal.body,
-            }); */
-            setAnnouncement({
-              isActivated: true,
-              announceType: "info",
-              message: "Generando PDF...",
             });
           }}
         >

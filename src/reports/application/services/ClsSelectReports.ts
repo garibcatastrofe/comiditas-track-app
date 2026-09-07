@@ -19,7 +19,7 @@ export class ClsSelectReports {
 
     if (type === "monthly") {
       const monthRange = objDate.getMonthDateRange({
-        month: date.getMonth(),
+        month: date.getMonth() + 1,
         year: date.getFullYear(),
       });
       fromDate = monthRange.firstDay;
