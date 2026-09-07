@@ -6,10 +6,10 @@ import { Title } from "@/content/shared/components/title/Title";
 import { TryAgainContent } from "@/content/shared/components/tryAgainContent/TryAgainContent";
 import { useTheme } from "@/theme/ThemeContext";
 import { useRouter } from "expo-router";
-import { Download, SlidersHorizontal } from "lucide-react-native";
+import { SlidersHorizontal, Upload } from "lucide-react-native";
 import { FlatList, Pressable, View } from "react-native";
 import { Graph } from "./components/graph/Graph";
-import { ModalBodyDownloadStats } from "./components/modalBodyDownloadStats/ModalBodyDownloadStats";
+import { ModalBodyExportReports } from "./components/modalBodyExportReports/ModalBodyExportReports";
 import { ModalBodyFilterStats } from "./components/modalBodyFilterStats/ModalBodyFilterStats";
 import { useStats } from "./hooks/useStats";
 
@@ -65,12 +65,12 @@ export function StatsContent() {
               onPress={() =>
                 setModal({
                   isActivated: true,
-                  title: "Descargar",
-                  body: <ModalBodyDownloadStats />,
+                  title: "Exportar",
+                  body: <ModalBodyExportReports />,
                 })
               }
             >
-              <Download size={20} color={theme.primary_txt} />
+              <Upload size={20} color={theme.primary_txt} />
             </Pressable>
           </View>
 

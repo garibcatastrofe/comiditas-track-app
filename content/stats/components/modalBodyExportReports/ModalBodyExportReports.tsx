@@ -10,9 +10,9 @@ import * as Sharing from "expo-sharing";
 import { useState } from "react";
 import { Pressable, View } from "react-native";
 import * as XLSX from "xlsx";
-import { useDownload } from "./stores/downloadStore";
+import { useDownload } from "../../stores/downloadStore";
 
-export function ModalBodyDownloadStats() {
+export function ModalBodyExportReports() {
   const { theme } = useTheme();
   const { setModal, modal } = useModal();
   const { setAnnouncement } = useAnnouncement();
@@ -21,7 +21,7 @@ export function ModalBodyDownloadStats() {
   const [type, setType] = useState<"monthly" | "annual">("monthly");
   const [date, setDate] = useState<Date | null>(new Date());
 
-  const generarYDescargarExcel = async (reports: IReportPrimitive[]) => {
+  const generateExcel = async (reports: IReportPrimitive[]) => {
     try {
       const newReports: Omit<IReportPrimitive, "id">[] = [];
       reports.forEach((r) =>
@@ -39,7 +39,6 @@ export function ModalBodyDownloadStats() {
 
       const base64 = XLSX.write(workbook, { type: "base64", bookType: "xlsx" });
 
-      // Nueva API: crear un File dentro del directorio cache
       const file = new File(Paths.cache, `reporte_${Date.now()}.xlsx`);
       file.write(base64, { encoding: "base64" });
 
@@ -95,7 +94,7 @@ export function ModalBodyDownloadStats() {
     });
 
     if (response.ok) {
-      await generarYDescargarExcel(response.reports);
+      await generateExcel(response.reports);
     } else {
       setAnnouncement({
         isActivated: true,
@@ -155,7 +154,7 @@ export function ModalBodyDownloadStats() {
       {/* DATE */}
       <DinamicInputDate value={date} onChange={setDate} />
 
-      {/* BOTONES CANCELAR Y DESCARGAR */}
+      {/* BOTONES CANCELAR Y EXPORTAR */}
       <View className="flex-row gap-4">
         <Pressable
           className="items-center justify-center flex-1 p-4 rounded-full"
@@ -165,7 +164,7 @@ export function ModalBodyDownloadStats() {
           onPress={() => {
             setModal({
               isActivated: false,
-              title: "Descargar",
+              title: "Exportar",
               body: modal.body,
             });
           }}
@@ -196,7 +195,7 @@ export function ModalBodyDownloadStats() {
               color: download.downloading ? theme.disabled : theme.primary_txt,
             }}
           >
-            Descargar
+            Exportar
           </TextApp>
         </Pressable>
       </View>
