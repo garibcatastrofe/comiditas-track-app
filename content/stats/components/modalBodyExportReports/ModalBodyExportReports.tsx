@@ -1,114 +1,16 @@
-import { useAnnouncement } from "@/content/shared/components/announcement/stores/announcementStore";
 import { useModal } from "@/content/shared/components/modal/stores/modalStore";
 import { TextApp } from "@/content/shared/components/textApp/TextApp";
 import { DinamicInputDate } from "@/content/shared/form/dinamicInputDate/DinamicInputDate";
-import { IReportPrimitive } from "@/src/reports/domain/interfaces/IReportPrimitive";
-import { ClsReportController } from "@/src/reports/infrastructure/ClsReportController";
 import { useTheme } from "@/theme/ThemeContext";
-import { File, Paths } from "expo-file-system";
-import * as Sharing from "expo-sharing";
-import { useState } from "react";
 import { Pressable, View } from "react-native";
-import * as XLSX from "xlsx";
 import { useDownload } from "../../stores/downloadStore";
+import { useExportReports } from "./hooks/useExportReports";
 
 export function ModalBodyExportReports() {
   const { theme } = useTheme();
   const { setModal, modal } = useModal();
-  const { setAnnouncement } = useAnnouncement();
-  const { download, setDownload } = useDownload();
-
-  const [type, setType] = useState<"monthly" | "annual">("monthly");
-  const [date, setDate] = useState<Date | null>(new Date());
-
-  const generateExcel = async (reports: IReportPrimitive[]) => {
-    try {
-      const newReports: Omit<IReportPrimitive, "id">[] = [];
-      reports.forEach((r) =>
-        newReports.push({
-          date: r.date,
-          breakfastStatus: r.breakfastStatus,
-          lunchStatus: r.lunchStatus,
-          dinnerStatus: r.dinnerStatus,
-        }),
-      );
-
-      const worksheet = XLSX.utils.json_to_sheet(newReports);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Comiditas");
-
-      const base64 = XLSX.write(workbook, { type: "base64", bookType: "xlsx" });
-
-      const file = new File(Paths.cache, `reporte_${Date.now()}.xlsx`);
-      file.write(base64, { encoding: "base64" });
-
-      const disponible = await Sharing.isAvailableAsync();
-      if (disponible) {
-        await Sharing.shareAsync(file.uri, {
-          mimeType:
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          dialogTitle: "Guardar o compartir Excel",
-          UTI: "com.microsoft.excel.xlsx",
-        });
-      } else {
-        setAnnouncement({
-          isActivated: true,
-          announceType: "info",
-          message: `Excel generado en: ${file.uri}`,
-        });
-      }
-    } catch (error) {
-      console.error(error);
-      setAnnouncement({
-        isActivated: true,
-        announceType: "error",
-        message: "Ocurrió un error al generar el Excel",
-      });
-    }
-  };
-
-  const downloadAction = async () => {
-    if (download.downloading) {
-      setAnnouncement({
-        isActivated: true,
-        announceType: "info",
-        message: "Ya hay otra descarga en proceso",
-      });
-      return;
-    }
-
-    setDownload({
-      downloading: true,
-      answerType: "info",
-      message: "Descargando",
-    });
-    setAnnouncement({
-      isActivated: true,
-      announceType: "info",
-      message: "Generando Excel...",
-    });
-
-    const response = await ClsReportController.selectReports({
-      date: date ?? new Date(),
-      type,
-    });
-
-    if (response.ok) {
-      await generateExcel(response.reports);
-    } else {
-      setAnnouncement({
-        isActivated: true,
-        announceType: "error",
-        message: response.message,
-      });
-    }
-
-    setDownload({
-      downloading: false,
-      answerType: "ok",
-      message: "Descarga completa",
-    });
-  };
+  const { download } = useDownload();
+  const { date, setDate, type, setType, downloadAction } = useExportReports();
 
   return (
     <View className="gap-4">
